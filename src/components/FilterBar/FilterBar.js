@@ -8,12 +8,16 @@ import '../../assets/css/fontawesome-all.css'
 import FilterBarItem from './FilterBarItem'
 
 import DacTrungApi from '../../api/DacTrungApi'
-import SanPhamApi from '../../api/SanPhamApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProductsFilter } from '../../redux/store/product'
+import { selectCategory, selectSelectedFilters, selectSize } from '../../redux/selectors/productSelector'
 
 const FilterBar = () => {
+    const dispatch = useDispatch();
     const [dactrung, setDacTrungs] = useState({});
-
-    const [checked, setChecked] = useState([]);
+    const size = useSelector(selectSize);
+    const category = useSelector(selectCategory);
+    const selectedFilters = useSelector(selectSelectedFilters);
 
     useEffect(() => {
         const response = DacTrungApi.getAll();
@@ -23,26 +27,20 @@ const FilterBar = () => {
     var keys = Object.keys(dactrung);
 
     const handleToggle = (e) => {
-        const currentIndex = checked.indexOf(e.target.id);
-        const newChecked = [...checked];
+        const currentIndex = selectedFilters.indexOf(e.target.id);
+        const newChecked = [...selectedFilters];
 
         if (currentIndex === -1) {
             newChecked.push(e.target.id);
         } else {
             newChecked.splice(currentIndex, 1);
         }
-
-        setChecked(newChecked);
-
-        const response = SanPhamApi.getSanPhamByDacTrungs(checked)
-        response.then(result => console.log(result))
+        dispatch(fetchProductsFilter({ category: category, selectedFilters: newChecked, page: 1, size: size }))
     }
 
     const filterItems = keys.map((item) => (
         <FilterBarItem info={item} childFilter={dactrung[item]} key={item} onChangeId={handleToggle} />
     ))
-
-    console.log(checked);
 
     return (
         <Col lg={3} className="mt-lg-0 mt-4 p-lg-0 order-lg-first order-last">

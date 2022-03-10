@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import '../assets/css/bootstrap.css';
 import '../assets/css/style.css';
 import '../assets/css/popuo-box.css';
@@ -10,58 +10,37 @@ import { Container, Row } from 'react-bootstrap'
 import Pagination from '@material-ui/lab/Pagination'
 import TopProductItem from '../components/TopProduct/TopProductItem'
 
-import SanPhamApi from '../api/SanPhamApi'
-
 import chunk from 'lodash/chunk'
-import { useDispatch } from 'react-redux';
-import { fetchProducts } from '../redux/store/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsFilter } from '../redux/store/product';
+import { selectCategory, selectPage, selectProducts, selectSelectedFilters, selectSize, selectTotalPages } from '../redux/selectors/productSelector';
 
 const Product = () => {
   const dispatch = useDispatch();
-  const [product, setProduct] = useState([]);
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
-  const [pageSize, setPageSize] = useState(6);
-
-  const retrieveProducts = useCallback(() => {
-    const params = getRequestParams(page, pageSize);
-    SanPhamApi.getAllPaging(params)
-      .then((response) => {
-        const { content, totalPages } = response;
-        setProduct(content);
-        setCount(totalPages);
-        setPageSize(6);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [page, pageSize])
+  const product = useSelector(selectProducts)
+  const size = useSelector(selectSize)
+  const page = useSelector(selectPage)
+  const totalPages = useSelector(selectTotalPages)
+  const category = useSelector(selectCategory)
+  const selectedFilters = useSelector(selectSelectedFilters)
 
   useEffect(() => {
-    retrieveProducts()
-    dispatch(fetchProducts())
-  }, [dispatch, retrieveProducts])
-
-  const getRequestParams = (page, pageSize) => ({
-    page: page,
-    size: pageSize
-  })
-
-  const handlePageChange = (e, value) => {
-    setPage(value)
-    retrieveProducts();
-  }
+    dispatch(fetchProductsFilter({ category: 0, selectedFilters: [], page: 1, size: size }))
+  }, [dispatch, size])
 
   const rows = product.map((item) => (
-    <TopProductItem info={item} key={item.maSP} grid={4}/>
+    <TopProductItem info={item} key={item.maSP} grid={4} />
   ));
 
+  const handlePageChange = (e, value) => {
+    dispatch(fetchProductsFilter({ category: category, selectedFilters: selectedFilters, page: value, size: size }))
+  }
 
   return (
     <div className='ads-grid py-sm-5 py-4'>
       <Container className="py-xl-4 py-lg-2">
         <h3 className="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-        Sản Phẩm<span className="font-weight-normal"> Của Chúng Tôi</span> 
+          Sản Phẩm<span className="font-weight-normal"> Của Chúng Tôi</span>
         </h3>
         <Row>
           <FilterBar />
@@ -80,7 +59,7 @@ const Product = () => {
               <div className="product-sec1 px-lg-4 mt-5">
                 <br />
                 <Pagination
-                  count={count}
+                  count={totalPages}
                   page={page}
                   siblingCount={1}
                   boundaryCount={1}

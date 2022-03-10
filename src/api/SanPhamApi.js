@@ -38,5 +38,15 @@ const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
 
-const api = { getAll, getNewOrderByThoiGianNhap, getAllPaging, getById, getSanPhamByDacTrungs }
+const filterByDacTrungAndLoaiSP = (filter, pageable) => {
+    const { listDacTrung, loaiSP } = filter
+    const { page, size } = pageable
+    const productFilter = {
+        "list-dac-trung": listDacTrung,
+        "loaiSP": loaiSP
+    }
+    return Api.post(`${url}/filter?page=${page}&size=${size}`, productFilter)
+}
+
+const api = { getAll, getNewOrderByThoiGianNhap, getAllPaging, getById, getSanPhamByDacTrungs, filterByDacTrungAndLoaiSP }
 export default api;
