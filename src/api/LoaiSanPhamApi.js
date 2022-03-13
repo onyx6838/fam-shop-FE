@@ -6,5 +6,9 @@ const getAll = () => {
     return Api.get(`${url}`);
 };
 
-const api = { getAll }
+const getParentCategory = () => {
+    return Api.get(`${url}/parent`);
+};
+
+const api = { getAll, getParentCategory }
 export default api;

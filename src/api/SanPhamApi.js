@@ -43,10 +43,15 @@ const filterByDacTrungAndLoaiSP = (filter, pageable) => {
     const { page, size } = pageable
     const productFilter = {
         "list-dac-trung": listDacTrung,
-        "loaiSP": loaiSP
+        "loai-sp": loaiSP
     }
-    return Api.post(`${url}/filter?page=${page}&size=${size}`, productFilter)
+    return Api.post(`${url}/filter?page=${page}&size=${size}`, productFilter);
 }
 
-const api = { getAll, getNewOrderByThoiGianNhap, getAllPaging, getById, getSanPhamByDacTrungs, filterByDacTrungAndLoaiSP }
+const getByParentLoaiSP = (loaiSP, pageable) => {
+    const { page, size } = pageable
+    return Api.post(`${url}/category?page=${page}&size=${size}`, loaiSP);
+}
+
+const api = { getAll, getNewOrderByThoiGianNhap, getAllPaging, getById, getSanPhamByDacTrungs, filterByDacTrungAndLoaiSP, getByParentLoaiSP }
 export default api;
