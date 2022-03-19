@@ -11,8 +11,13 @@ import Payment from "./Payment";
 import React from "react";
 import CategoryProduct from "./CategoryProduct";
 import Login from "./Login";
+import withAuth from "../HOC/withAuth";
 
 function App() {
+  const ProtectedRoutes = {
+    Payment: withAuth(Payment)
+  }
+
   return (
     <>
       <TopHeader />
@@ -24,7 +29,7 @@ function App() {
         <Route path='/details/:id' element={<Details />}></Route>
         <Route path='/product' element={<Product />}></Route>
         <Route path='/cart' element={<Cart />}></Route>
-        <Route path='/payment' element={<Payment />}></Route>
+        <Route path='/payment' element={<ProtectedRoutes.Payment />}></Route>
         <Route path='/category' element={<CategoryProduct />}></Route>
         <Route path='/login' element={<Login />}></Route>
       </Routes>

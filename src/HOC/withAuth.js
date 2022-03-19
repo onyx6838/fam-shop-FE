@@ -1,15 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-function withAuth(AuthenticatedComponent) {
+export default function withAuth(AuthenticatedComponent) {
+  const Component = (props) => {
+    const isAuth = useSelector(state => state.user.isAuth)
+    
+    return isAuth ? (
+      <AuthenticatedComponent {...props} />
+    ) : (
+      <Navigate to="/login" />
+    );
+  };
 
-  class HOC extends React.Component {
-    render() {
-      return (
-        <AuthenticatedComponent {...this.props} />
-      );
-    }
-  }
-  return HOC;
+  return Component;
 }
-
-export default withAuth;
