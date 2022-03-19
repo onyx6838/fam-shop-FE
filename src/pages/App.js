@@ -9,10 +9,10 @@ import Details from "./Details";
 import Cart from "./Cart";
 import Payment from "./Payment";
 import React from "react";
+import CategoryProduct from "./CategoryProduct";
+import Login from "./Login";
 
 function App() {
-  
-
   return (
     <>
       <TopHeader />
@@ -25,6 +25,8 @@ function App() {
         <Route path='/product' element={<Product />}></Route>
         <Route path='/cart' element={<Cart />}></Route>
         <Route path='/payment' element={<Payment />}></Route>
+        <Route path='/category' element={<CategoryProduct />}></Route>
+        <Route path='/login' element={<Login />}></Route>
       </Routes>
       <Footer />
     </>

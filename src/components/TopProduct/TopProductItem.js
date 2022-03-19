@@ -28,7 +28,7 @@ const TopProductItem = ({ info, grid }) => {
                 </div>
                 <div className="item-info-product text-center mt-2">
                     <h4 className="pt-1">
-                        <a href="single.html">{info.ten}</a>
+                        <Link to={{ pathname: `/details/${info.maSP}` }}>{info.ten}</Link>
                     </h4>
                     <div className="info-product-price">
                         <span className="item_price">{info.donGiaBan}đ</span>

@@ -21,12 +21,20 @@ const Home = () => {
   return (
     <>
       <Banner />
-      {TopProductRows}
-      <Row>
-        <Col lg={12}>
-          <Ads />
-        </Col>
-      </Row>
+      <div className="ads-grid">
+        <div className="container py-md-5 py-4">
+          <Row>
+            <Col lg={12}>
+              <div className="wrapper">
+                {TopProductRows}
+              </div>
+            </Col>
+            <Col lg={12}>
+              <Ads />
+            </Col>
+          </Row>
+        </div>
+      </div>
     </>
   )
 }

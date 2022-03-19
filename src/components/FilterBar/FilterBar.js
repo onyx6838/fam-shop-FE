@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Col } from 'react-bootstrap'
 import '../../assets/css/bootstrap.css'
 import '../../assets/css/style.css'
@@ -7,22 +7,27 @@ import '../../assets/css/fontawesome-all.css'
 
 import FilterBarItem from './FilterBarItem'
 
-import DacTrungApi from '../../api/DacTrungApi'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductsFilter } from '../../redux/store/product'
+import { fetchProductFeatures, fetchProductsFilter } from '../../redux/store/product'
 import { selectCategory, selectSelectedFilters, selectSize } from '../../redux/selectors/productSelector'
 
 const FilterBar = () => {
     const dispatch = useDispatch();
-    const [dactrung, setDacTrungs] = useState({});
+    const dactrung = useSelector(state => state.product.filters)
     const size = useSelector(selectSize);
     const category = useSelector(selectCategory);
     const selectedFilters = useSelector(selectSelectedFilters);
+    const categoryList = useSelector(state => state.product.categories)
+    const search = useSelector(state => state.product.search)
 
     useEffect(() => {
-        const response = DacTrungApi.getAll();
-        response.then(res => setDacTrungs(res));
-    }, [])
+        dispatch(fetchProductFeatures({
+            categories: categoryList,
+            category: category,
+            listDacTrung: [],
+            search : search
+        }))
+    }, [category, categoryList, dispatch, search])
 
     var keys = Object.keys(dactrung);
 
@@ -35,7 +40,16 @@ const FilterBar = () => {
         } else {
             newChecked.splice(currentIndex, 1);
         }
-        dispatch(fetchProductsFilter({ category: category, selectedFilters: newChecked, page: 1, size: size }))
+
+        dispatch(fetchProductsFilter(
+            {
+                categories: categoryList,
+                category: category,
+                selectedFilters: newChecked,
+                page: 1,
+                size: size,
+                search : search
+            }))
     }
 
     const filterItems = keys.map((item) => (

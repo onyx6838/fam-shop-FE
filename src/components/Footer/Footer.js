@@ -59,7 +59,6 @@ const Footer = () => {
             <div className="w3l-middlefooter-sec">
                 <div className="container py-5">
                     <div className="row footer-info w3-agileits-info">
-
                         <div className="col-md-3 col-sm-6 footer-grids">
                             <h3 className="mb-3">Thể Loại</h3>
                             <ul>
@@ -68,7 +67,7 @@ const Footer = () => {
                                         return (
                                             item.loaiSPConList.length > 0 && (
                                                 <li className="mb-3" key={item.maLoai}>
-                                                    <a href="product2.html">{item.ten}</a>
+                                                    <a href="/">{item.ten}</a>
                                                 </li>
                                             )
                                         )

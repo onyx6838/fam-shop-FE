@@ -54,7 +54,7 @@ const Details = () => {
   }
 
   const decreateQuantity = () => {
-    setQuantityAddToCart(quantityAddToCart => Math.max(quantityAddToCart - 1, 0))
+    setQuantityAddToCart(quantityAddToCart => Math.max(quantityAddToCart - 1, 1))
   }
 
   const addToCart = () => {

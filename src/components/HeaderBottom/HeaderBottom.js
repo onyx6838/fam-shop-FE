@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../assets/css/bootstrap.css'
 import '../../assets/css/style.css'
 import '../../assets/css/popuo-box.css'
@@ -6,13 +6,32 @@ import '../../assets/css/fontawesome-all.css'
 import { Col, Container, Row } from 'react-bootstrap'
 
 import cart from '../../assets/images/cart.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectNumberCart } from '../../redux/selectors/cartSelector'
+import { changeSearch } from '../../redux/store/product'
 
 const formStyle = {
     maxWidth: '600px'
 };
 
 const HeaderBottom = () => {
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
+    const [text, setText] = useState('');
+    const cartQuantity = useSelector(selectNumberCart);
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        dispatch(changeSearch(text))
+        navigate('/category')
+    }
+
+    const changeText = (e) => {
+        setText(e.target.value)
+    }
+
     return (
         <div className="header-bot my-md-4 my-3" id="site-header">
             <Container>
@@ -25,9 +44,10 @@ const HeaderBottom = () => {
                     <Col lg={9} md={8} className="header">
                         <Row>
                             <Col lg={9} sm={8} className="agileits_search">
-                                <form className="form-inline" action="#" method="post" style={formStyle}>
+                                <form className="form-inline" style={formStyle} onSubmit={handleSearchSubmit}>
                                     <input className="form-control" type="search"
-                                        placeholder="Tìm kiếm sản phẩm ..." aria-label="Search" required />
+                                        placeholder="Tìm kiếm sản phẩm ..." aria-label="Search" value={text}
+                                        onChange={changeText} />
                                     <button className="btn" type="submit"><i className="fa fa-search"
                                         aria-hidden="true"></i></button>
                                 </form>
@@ -38,6 +58,7 @@ const HeaderBottom = () => {
                                     <button className="btn w3view-cart p-0" type="submit" name="submit" value="">
                                         <Link to="/cart">
                                             <img src={cart} alt="cart" className="img-fluid" /> Giỏ hàng
+                                            <span className='badge badge-pill badge-warning'>{cartQuantity}</span>
                                         </Link>
                                     </button>
                                 </div>

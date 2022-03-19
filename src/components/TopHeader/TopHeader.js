@@ -6,6 +6,7 @@ import '../../assets/css/popuo-box.css'
 import '../../assets/css/fontawesome-all.css'
 import Login from '../Auth/Login'
 import Register from '../Auth/Register'
+import { Link, NavLink } from 'react-router-dom'
 
 const TopHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,20 +37,26 @@ const TopHeader = () => {
           </Col>
           <Col lg={9} sm={8} className="header-right ml-auto text-sm-right text-center">
             <ul className="top-header-lists">
-              <li className="mx-3">
+              {/* <li className="mx-3">
                 <i className="fas fa-sign-in-alt mr-1" style={{ cursor: 'pointer' }} onClick={showModal}></i>
-                <span style={{ cursor: 'pointer' }} onClick={showModal}>Đăng nhập</span>
+                <span style={{ cursor: 'pointer' }} onClick={showModal}>Đăng nhập Modal</span>
+              </li> */}
+              <li className="mx-3">
+                <i className="fas fa-sign-in-alt mr-1" style={{ cursor: 'pointer' }}></i>
+                <span style={{ cursor: 'pointer' }}>
+                  <Link to="/login">Đăng nhập</Link>
+                </span>
               </li>
-              <li>
+              {/* <li>
                 <i className="fas fa-sign-out-alt mr-1" style={{ cursor: 'pointer' }} onClick={showModalRegister}></i>
                 <span style={{ cursor: 'pointer' }} onClick={showModalRegister}>Đăng kí</span>
-              </li>
+              </li> */}
             </ul>
           </Col>
         </Row>
       </Container>
-      <Login isOpen={isOpen} onClick={hideModal}/>
-      <Register isOpen={isOpenRegister} onClick={hideModalRegister}/>
+      <Login isOpen={isOpen} onClick={hideModal} />
+      <Register isOpen={isOpenRegister} onClick={hideModalRegister} />
     </div>
   )
 }
