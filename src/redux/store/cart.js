@@ -28,7 +28,7 @@ const slice = createSlice({
                 );
                 state.cart[qtyInx].qty += qty ? qty : 1;
             } else {
-                state.cart.push({ maSP, hinhAnh, ten, moTa, donGiaBan, qty: qty ? qty : 1, selected: true });
+                state.cart.push({ maSP, hinhAnh, ten, moTa, donGiaBan, qty: qty ? qty : 1 });
             }
             state.numberCart += qty ? qty : 1;
         },

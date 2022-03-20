@@ -1,15 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import storage from '../storage/storage';
 
 export default function withAuth(AuthenticatedComponent) {
   const Component = (props) => {
-    const isAuth = useSelector(state => state.user.isAuth)
+    //const isAuth = useSelector(state => state.user.isAuth)
     
-    return isAuth ? (
-      <AuthenticatedComponent {...props} />
-    ) : (
+    return !storage.isAuth() ? (
       <Navigate to="/login" />
+    ) : (
+      <AuthenticatedComponent {...props} />
     );
   };
 

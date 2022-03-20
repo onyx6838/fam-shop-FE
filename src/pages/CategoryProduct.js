@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsFilter } from '../redux/store/product';
 import { selectCategory, selectPage, selectProducts, selectSelectedFilters, selectSize, selectTotalPages } from '../redux/selectors/productSelector';
 import { chunk } from 'lodash';
+import BrandSlick from '../components/Brand/BrandSlick';
 
 const CategoryProduct = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,10 @@ const CategoryProduct = () => {
   const totalPages = useSelector(selectTotalPages)
   const selectedFilters = useSelector(selectSelectedFilters)
   const category = useSelector(selectCategory)
+  const categoryName = useSelector(state => state.product.categoryName)
   const categories = useSelector(state => state.product.categories)
   const search = useSelector(state => state.product.search)
+  const brand = useSelector(state => state.product.brand)
 
   useEffect(() => {
     dispatch(fetchProductsFilter(
@@ -34,9 +37,10 @@ const CategoryProduct = () => {
         selectedFilters: [],
         page: 1,
         size: size,
-        search: search
+        search: search,
+        brand: brand
       }))
-  }, [categories, category, dispatch, search, size])
+  }, [brand, categories, category, dispatch, search, size])
 
   const rows = product.map((item) => (
     <TopProductItem info={item} key={item.maSP} grid={4} />
@@ -50,16 +54,22 @@ const CategoryProduct = () => {
         selectedFilters: selectedFilters,
         page: value,
         size: size,
-        search: search
+        search: search,
+        brand: brand
       }))
   }
 
   return (
     <div className='ads-grid py-sm-5 py-4'>
       <Container className="py-xl-4 py-lg-2">
-        <h3 className="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-          <span className="font-weight-normal"> {categories.ten}</span>
+        <h3 className="tittle-w3l text-center">
+          <span className="font-weight-normal">
+            {
+              categoryName ? categoryName : search
+            }
+          </span>
         </h3>
+        <BrandSlick />
         <Row>
           <FilterBar />
           <div className="agileinfo-ads-display col-lg-9 order-lg-last order-first">
@@ -88,8 +98,8 @@ const CategoryProduct = () => {
             </div>
           </div>
         </Row>
-      </Container>
-    </div>
+      </Container >
+    </div >
   )
 }
 

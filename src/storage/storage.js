@@ -44,38 +44,42 @@ const getToken = () => {
     return getItem("token");
 }
 
+const setRefreshToken = (token) => {
+    setItem("refreshToken", token);
+};
+
+const removeRefreshToken = () => {
+    removeItem("refreshToken");
+};
+
+const getRefreshToken = () => {
+    return getItem("refreshToken");
+}
+
 const isAuth = () => {
     return getToken() !== null && getToken() !== undefined;
 }
 
 const setUserInfo = (user) => {
-    setItem("id", user.id);
-    setItem("firstname", user.firstName);
-    setItem("lastname", user.lastName);
-    setItem("username", user.username);
-    setItem("email", user.email);
-    setItem("role", user.role);
-    setItem("status", user.status);
-    setItem("fullname", user.fullName);
+    const { hoTen, loaiTK, tenTK, trangThai, email } = user
+    setItem("username", tenTK);
+    setItem("email", email);
+    setItem("role", loaiTK);
+    setItem("status", trangThai);
+    setItem("fullname", hoTen);
 }
 
 const getUserInfo = () => {
     return {
-        "id": getItem("id"),
-        "firstname": getItem("firstname"),
-        "lastname": getItem("lastname"),
         "username": getItem("username"),
         "email": getItem("email"),
         "role": getItem("role"),
         "status": getItem("status"),
-        "fullname":getItem("fullname")
+        "fullname": getItem("fullname")
     };
 }
 
 const removeUserInfo = () => {
-    removeItem("id");
-    removeItem("firstname");
-    removeItem("lastname");
     removeItem("username");
     removeItem("email");
     removeItem("role");
@@ -84,5 +88,9 @@ const removeUserInfo = () => {
 };
 
 // export
-const storage = { isRememberMe, setRememberMe, setToken, getToken, removeToken, isAuth, setUserInfo, getUserInfo, removeUserInfo };
+const storage = {
+    getItem, removeItem,
+    isRememberMe, setRememberMe, setToken, getToken, removeToken,
+    isAuth, setUserInfo, getUserInfo, removeUserInfo, setRefreshToken, removeRefreshToken, getRefreshToken
+};
 export default storage;

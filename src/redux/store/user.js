@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import UserApi from '../../api/UserApi'
+import storage from '../../storage/storage';
 
 export const fetchLogin = createAsyncThunk('user/login', async (data, { rejectWithValue }) => {
     const { username, password } = data;
@@ -19,14 +20,23 @@ export const fetchLogin = createAsyncThunk('user/login', async (data, { rejectWi
 const slice = createSlice({
     name: 'user',
     initialState: {
-        userInfo: {},
-        isAuth: false,
-        isRememberMe: false,
-        httpErr: false
+        userInfo: storage.getUserInfo(),
+        token: storage.getToken(),
+        refreshToken: storage.getRefreshToken(),
+        isRememberMe: storage.isRememberMe()
     },
     reducers: {
-        setAuth: (state, action) => {
-            state.isAuth = action.payload
+        setToken: (state, action) => {
+            state.token = action.payload
+        },
+        setRememberMe: (state, action) => {
+            state.isRememberMe = action.payload
+        },
+        setUserInfo: (state, action) => {
+            state.userInfo = action.payload
+        },
+        setRefreshToken: (state, action) => {
+            state.refreshToken = action.payload
         }
     },
     extraReducers: {
@@ -40,5 +50,5 @@ const slice = createSlice({
 });
 
 const { actions, reducer } = slice;
-export const { setAuth } = actions;
+export const { setToken, setRememberMe, setUserInfo, setRefreshToken } = actions;
 export default reducer;

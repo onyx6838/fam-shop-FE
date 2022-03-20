@@ -39,13 +39,14 @@ const getById = (id) => {
 };
 
 const filterByDacTrungAndLoaiSP = (filter, pageable) => {
-    const { listDacTrung, loaiSP, categories, search } = filter
+    const { listDacTrung, loaiSP, categories, search, brand } = filter
     const { page, size } = pageable
     const productFilter = {
         "list-dac-trung": listDacTrung,
         "loai-sp": loaiSP,
         "loai-sp-list": categories,
-        "ten-sp": search
+        "ten-sp": search,
+        "thuong-hieu": brand
     }
     return Api.post(`${url}/filter?page=${page}&size=${size}`, productFilter);
 }

@@ -26,6 +26,16 @@ const CheckoutInfo = ({ cartList }) => {
                     </p>
                 </div>
             </div>
+            <div className="d-flex contact-grid mt-4 pt-lg-2">
+                <div className="cont-left text-center mr-3">
+                    <span className="fa fa-info-circle"></span>
+                </div>
+                <div className="cont-right">
+                    <h6>Ngân hàng</h6>
+                    <p>SHB (Đoàn Minh Giang)</p>
+                    <p>STK: 1000020009</p>
+                </div>
+            </div>
         </div>
     )
 }

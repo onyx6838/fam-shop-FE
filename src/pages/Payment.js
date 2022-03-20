@@ -29,7 +29,8 @@ const Payment = () => {
                             <h2 className="title-style-2 mb-sm-3 mb-2">
                                 <span className="font-weight-bold">Thông Tin Giao Hàng</span>
                             </h2>
-                            <CheckoutForm />
+                            <CheckoutForm cartList={cartList}/>
+                            <div className='mb-5'></div>
                             <div className='w3l-text-11'>
                                 <div className="text11-content">
                                     {cartRows}
@@ -37,7 +38,7 @@ const Payment = () => {
                             </div>
                         </Col>
                         <Col md={4} className="contact-left">
-                            <button className="btn btn-style">Thanh Toán</button>
+                            {/* <button className="btn btn-style">Thanh Toán</button> */}
                             <h3 className="title-style font-weight-bold mb-4">&nbsp;</h3>
                             <CheckoutInfo cartList={cartList}/>
                         </Col>

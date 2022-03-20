@@ -19,6 +19,7 @@ const FilterBar = () => {
     const selectedFilters = useSelector(selectSelectedFilters);
     const categoryList = useSelector(state => state.product.categories)
     const search = useSelector(state => state.product.search)
+    const brand = useSelector(state => state.product.brand)
 
     useEffect(() => {
         dispatch(fetchProductFeatures({
@@ -48,7 +49,8 @@ const FilterBar = () => {
                 selectedFilters: newChecked,
                 page: 1,
                 size: size,
-                search : search
+                search : search,
+                brand: brand
             }))
     }
 

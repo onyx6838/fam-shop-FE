@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import '../assets/css/bootstrap.css';
 import '../assets/css/style.css';
 import '../assets/css/popuo-box.css';
@@ -12,12 +12,16 @@ import { ErrorMessage, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLogin, setAuth } from '../redux/store/user';
+import { setRefreshToken, setRememberMe, setToken, setUserInfo } from '../redux/store/user';
+
+import UserApi from '../api/UserApi'
+import storage from '../storage/storage';
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const isAuth = useSelector(state => state.user.isAuth);
+    
+    const [isRememberMe, setRemember] = useState(useSelector(state => state.user.isRememberMe));
 
     const LoginSchema = Yup.object().shape({
         username: Yup.string()
@@ -30,10 +34,6 @@ const Login = () => {
             .required('Required')
     })
 
-    useEffect(() => {
-        if (isAuth) navigate("/home")
-    }, [isAuth, navigate])
-
     return (
         <div className="container py-md-5 py-4">
             <div className="row align-items-center justify-content-between">
@@ -44,9 +44,30 @@ const Login = () => {
                     <Formik
                         initialValues={{ username: '', password: '' }}
                         validationSchema={LoginSchema}
-                        onSubmit={(values) => {
-                            dispatch(fetchLogin(values))
-                            dispatch(setAuth(true))
+                        onSubmit={async (values) => {
+                            try {
+                                const user = await UserApi.login(values.username, values.password);
+                                storage.setRememberMe(isRememberMe);
+                                storage.setToken(user.token)
+                                storage.setRefreshToken(user.refreshToken)
+                                storage.setUserInfo(user)
+
+                                dispatch(setRememberMe(isRememberMe))
+                                dispatch(setUserInfo(user))
+                                dispatch(setToken(user.token))
+                                dispatch(setRefreshToken(user.refreshToken))
+                                navigate("/home")
+                            }
+                            catch (error) {
+                                if (error.status === 401) {
+                                    console.log(error);
+                                } else {
+                                    console.log(error);
+                                }
+                            }
+                            // dispatch(fetchLogin(values))
+                            // dispatch(setAuth(true))
+                            // dispatch(setRememberMe(values.rememberMe))
                         }}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -70,6 +91,12 @@ const Login = () => {
                                             value={props.values.password} />
                                     </Col>
                                     <Col lg={12}><ErrorMessage name="password" /></Col>
+                                    <Col lg={12}>
+                                        <label>
+                                            <input type='checkbox' name='rememberMe'
+                                                checked={isRememberMe} onChange={e => setRemember(e.target.checked)} />Ghi nhớ
+                                        </label>
+                                    </Col>
                                 </Row>
                                 <button className="btn btn-style mr-1" type="submit" disabled={props.isSubmitting}>Login</button>
                                 <button className="btn btn-style" onClick={() => navigate("/")}>Back To Home</button>
