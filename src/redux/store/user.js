@@ -42,9 +42,6 @@ const slice = createSlice({
     extraReducers: {
         [fetchLogin.fulfilled]: (state, action) => {
             state.userInfo = action.payload;
-        },
-        [fetchLogin.rejected]: (state, action) => {
-            state.httpErr = action.payload;
         }
     }
 });

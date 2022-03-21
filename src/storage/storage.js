@@ -62,29 +62,31 @@ const isAuth = () => {
 
 const setUserInfo = (user) => {
     const { hoTen, loaiTK, tenTK, trangThai, email } = user
-    setItem("username", tenTK);
+    setItem("tenTK", tenTK);
     setItem("email", email);
-    setItem("role", loaiTK);
-    setItem("status", trangThai);
-    setItem("fullname", hoTen);
+    setItem("loaiTK", loaiTK);
+    setItem("trangThai", trangThai);
+    setItem("hoTen", hoTen);
 }
 
 const getUserInfo = () => {
     return {
-        "username": getItem("username"),
+        "tenTK": getItem("tenTK"),
         "email": getItem("email"),
-        "role": getItem("role"),
-        "status": getItem("status"),
-        "fullname": getItem("fullname")
+        "loaiTK": getItem("loaiTK"),
+        "trangThai": getItem("trangThai"),
+        "hoTen": getItem("hoTen")
     };
 }
 
 const removeUserInfo = () => {
-    removeItem("username");
+    removeItem("tenTK");
     removeItem("email");
-    removeItem("role");
-    removeItem("status");
-    removeItem("fullname");
+    removeItem("loaiTK");
+    removeItem("trangThai");
+    removeItem("hoTen");
+    removeItem("token");
+    removeItem("refreshToken");
 };
 
 // export

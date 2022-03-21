@@ -5,31 +5,54 @@ import storage from '../../storage/storage'
 
 import DonDatHangApi from '../../api/DonDatHangApi'
 
+import Swal from "sweetalert2";
+
+import tree from '../../assets/images/trees.png'
+import nyanCat from '../../assets/images/gif/nyan-cat.gif'
+import { useNavigate } from 'react-router-dom';
+
 const CheckoutForm = ({ cartList }) => {
+    const navigate = useNavigate();
 
     return (
         <Formik
             initialValues={{
-                name: storage.getItem("fullname"),
+                name: storage.getItem("hoTen"),
                 phone: '',
                 address: '',
                 shipAddress: '',
                 email: '',
-                dateDelivery: null,
+                dateDelivery: '',
                 paymentType: ''
             }}
-            onSubmit={(values, actions) => {
+            onSubmit={async (values, actions) => {
                 // setTimeout(() => {
                 //     alert(JSON.stringify(values, null, 2));
                 //     actions.setSubmitting(false);
                 // }, 1000);
-                DonDatHangApi.payment({...values , cartList})
+                const response = DonDatHangApi.payment({ ...values, cartList })
+                response.then((rs) => {
+                    Swal.fire({
+                        title: 'Thanh toán thành công !!!',
+                        width: 600,
+                        timer: 2000,
+                        padding: '3em',
+                        color: '#716add',
+                        background: `#fff url(${tree})`,
+                        backdrop: `
+                          rgba(0,0,123,0.4)
+                          url(${nyanCat})
+                          left top
+                          no-repeat
+                        `
+                    }).then((rs) => navigate("/"))
+                })
             }}
             validateOnChange={false}
             validateOnBlur={false}
         >
             {props => (
-                <form onSubmit={props.handleSubmit} className="signin-form">
+                <form className="signin-form">
                     <div className="input-grids">
                         <Row>
                             <Col lg={6} className="form-group">
@@ -88,7 +111,7 @@ const CheckoutForm = ({ cartList }) => {
                                 </div>
                             </Col>
                             <Col lg={3}>
-                                <button className="btn btn-style" disabled={props.isSubmitting}>Thanh Toán</button>
+                                <button type="submit" onClick={props.handleSubmit} className="btn btn-style" disabled={props.isSubmitting}>Thanh Toán</button>
                             </Col>
                         </Row>
                     </div>

@@ -8,7 +8,7 @@ const payment = (data) => {
     let request = {
         order: {
             name: name,
-            username: storage.getItem("username"),
+            username: storage.getItem("tenTK"),
             phone: phone,
             email: email,
             address: address,
