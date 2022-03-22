@@ -103,10 +103,10 @@ const CheckoutForm = ({ cartList }) => {
                                         value={props.values.paymentType}
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}>
-                                        <option value="0">---- Hình thức thanh toán ----</option>
-                                        <option value="1">Chuyển khoản qua ngân hàng</option>
-                                        <option value="2">Trả tiền khi nhận hàng</option>
-                                        <option value="3">Trực tiếp đến cửa hàng</option>
+                                        <option value="">---- Hình thức thanh toán ----</option>
+                                        <option value="0">Chuyển khoản qua ngân hàng</option>
+                                        <option value="1">Trả tiền khi nhận hàng</option>
+                                        <option value="2">Trực tiếp đến cửa hàng</option>
                                     </select>
                                 </div>
                             </Col>

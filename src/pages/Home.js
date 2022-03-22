@@ -5,6 +5,7 @@ import TopProduct from '../components/TopProduct/TopProduct'
 import LoaiSanPhamApi from '../api/LoaiSanPhamApi'
 import Ads from '../components/Ads/Ads'
 import { Col, Row } from 'react-bootstrap'
+import NewProduct from '../components/NewProduct/NewProduct'
 
 const Home = () => {
   const [categoryParent, setCategoryParent] = useState([]);
@@ -26,6 +27,7 @@ const Home = () => {
           <Row>
             <Col lg={12}>
               <div className="wrapper">
+                <NewProduct />
                 {TopProductRows}
               </div>
             </Col>
