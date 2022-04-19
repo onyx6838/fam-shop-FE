@@ -86,6 +86,7 @@ const Details = () => {
               {/* <del className="mx-2 font-weight-light">$400.00</del> */}
             </h2>
             <p className="mb-3">Thương hiệu : {th && th.tenThuongHieu} </p>
+            <p className="mb-3">Tình trạng : {th.soLuong === 0 ? "Hết hàng" : "Còn hàng"} </p>
             <div className="occasion-cart">
               <div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                 <div className="quantity">

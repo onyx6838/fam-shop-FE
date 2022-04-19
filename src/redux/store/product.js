@@ -10,11 +10,34 @@ import { map } from 'lodash'
  * thunk
  */
 export const fetchProductsFilter = createAsyncThunk('product/fetchFilter', async (data, { rejectWithValue }) => {
-    let { categories, page, size, category, selectedFilters, search, brand } = data;
+    console.log("filter");
+    let { categories, page, size, category, selectedFilters, search, brand, typeOfGetProduct } = data;
+    switch (typeOfGetProduct) {
+        case 'SEARCH':  // k có brand từ ngoài vào
+            category = 0;
+            categories = []
+            brand = 0
+            break;
+        case 'CATEGORY':
+            category = categories.length > 0 ? 0 : category
+            search = ''
+            brand = 0
+            break;
+        case 'BRAND_SEARCH':    // từ trong filter
+            category = 0;
+            categories = []
+            break;
+        case 'BRAND_CATEGORY':
+            category = categories.length > 0 ? 0 : category
+            search = ''
+            break;
+        default:
+            break;
+    }
     const response = await SanPhamApi.filterByDacTrungAndLoaiSP(
         {
             listDacTrung: selectedFilters,
-            loaiSP: categories.length > 0 ? 0 : category,
+            loaiSP: category,
             categories: categories,
             search: search,
             brand: brand
@@ -22,15 +45,28 @@ export const fetchProductsFilter = createAsyncThunk('product/fetchFilter', async
     if (response.status < 200 || response.status >= 300) {
         return rejectWithValue(response);
     }
-    return { ...response, page, category, categories, selectedFilters, search, brand };
+    return { ...response, page };
 })
 
 export const fetchProductFeatures = createAsyncThunk('feature/getFeatures', async (data, { rejectWithValue }) => {
-    const { categories, category, listDacTrung, search } = data;
+    let { categories, category, search, typeOfGetProduct } = data;
+    switch (typeOfGetProduct) {
+        case 'SEARCH':  // k có brand từ ngoài vào
+        case 'BRAND_SEARCH':
+            category = 0;
+            categories = []
+            break;
+        case 'CATEGORY':
+        case 'BRAND_CATEGORY':
+            category = categories.length > 0 ? 0 : category
+            search = ''
+            break;
+        default:
+            break;
+    }
     const response = await
         DacTrungApi.getFeatureByLoaiSP(
             {
-                listDacTrung: listDacTrung,
                 loaiSP: category,
                 categories: categories,
                 search: search
@@ -38,15 +74,28 @@ export const fetchProductFeatures = createAsyncThunk('feature/getFeatures', asyn
     if (response.status < 200 || response.status >= 300) {
         return rejectWithValue(response);
     }
-    return { response, categories, category, search };
+    return { response, categories, category, search, typeOfGetProduct };
 })
 
 export const fetchProductBrands = createAsyncThunk('brand/getBrands', async (data, { rejectWithValue }) => {
-    const { categories, category, listDacTrung, search } = data;
+    let { categories, category, search, typeOfGetProduct } = data;
+    switch (typeOfGetProduct) {
+        case 'SEARCH':  // k có brand từ ngoài vào
+        case 'BRAND_SEARCH':
+            category = 0;
+            categories = []
+            break;
+        case 'CATEGORY':
+        case 'BRAND_CATEGORY':
+            category = categories.length > 0 ? 0 : category
+            search = ''
+            break;
+        default:
+            break;
+    }
     const response = await
         ThuongHieuApi.getBrandByFilter(
             {
-                listDacTrung: listDacTrung,
                 loaiSP: category,
                 categories: categories,
                 search: search
@@ -54,7 +103,7 @@ export const fetchProductBrands = createAsyncThunk('brand/getBrands', async (dat
     if (response.status < 200 || response.status >= 300) {
         return rejectWithValue(response);
     }
-    return { response, categories, category, search };
+    return { response, categories, category, search, typeOfGetProduct };
 })
 
 const slice = createSlice({
@@ -64,7 +113,7 @@ const slice = createSlice({
         totalElements: 0,
         totalPages: 0,
         page: 1,
-        size: 3,
+        size: 2,
         // filter by category
         category: 0,
         categoryName: '',
@@ -78,7 +127,9 @@ const slice = createSlice({
         search: '',
         // brand filter
         brand: 0,
-        brands: []
+        brands: [],
+        typeOfGetProduct: '' // logic để 1 là search 2 chỉ theo thể loại, thêm brand vào 2 loại khi vào trong , 
+        // k xảy ra đồng thời cả 2 (k lquan đến filter)
     },
     reducers: {
         changeSearch: (state, action) => {
@@ -90,6 +141,15 @@ const slice = createSlice({
         },
         changeCategoryName: (state, action) => {
             state.categoryName = action.payload
+        },
+        changeTypeOfGetProduct: (state, action) => {
+            state.typeOfGetProduct = action.payload
+        },
+        changeSelectedFilters: (state, action) => {
+            state.selectedFilters = action.payload
+        },
+        changeBrand: (state, action) => {
+            state.brand = action.payload
         }
     },
     extraReducers: {
@@ -98,27 +158,16 @@ const slice = createSlice({
             state.totalElements = action.payload.totalElements;
             state.totalPages = action.payload.totalPages;
             state.page = action.payload.page;
-            state.category = action.payload.category;
-            state.categories = action.payload.categories;
-            state.selectedFilters = action.payload.selectedFilters;
-            state.search = action.payload.search;
-            state.brand = action.payload.brand;
         },
         [fetchProductFeatures.fulfilled]: (state, action) => {
             state.filters = action.payload.response;
-            state.categories = action.payload.categories;
-            state.category = action.payload.category;
-            state.search = action.payload.search;
         },
         [fetchProductBrands.fulfilled]: (state, action) => {
             state.brands = action.payload.response;
-            state.categories = action.payload.categories;
-            state.category = action.payload.category;
-            state.search = action.payload.search;
         }
     }
 });
 
 const { reducer, actions } = slice;
-export const { changeSearch, changeCategory, changeCategoryName } = actions;
+export const { changeSearch, changeCategory, changeCategoryName, changeTypeOfGetProduct, changeSelectedFilters, changeBrand } = actions;
 export default reducer;

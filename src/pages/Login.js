@@ -77,7 +77,7 @@ const Login = () => {
                                 <Row className="contact-block">
                                     <Col lg={12} className="form-group">
                                         <input type="text" name="username"
-                                            placeholder="Username" className="contact-input"
+                                            placeholder="Tên đăng nhập" className="contact-input"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.username} />
@@ -98,8 +98,8 @@ const Login = () => {
                                         </label>
                                     </Col>
                                 </Row>
-                                <button className="btn btn-style mr-1" type="submit" disabled={props.isSubmitting}>Login</button>
-                                <button className="btn btn-style" onClick={() => navigate("/")}>Back To Home</button>
+                                <button className="btn btn-style mr-1" type="submit" disabled={props.isSubmitting}>Đăng nhập</button>
+                                <button className="btn btn-style" onClick={() => navigate("/")}>Về trang chủ</button>
                             </form>
                         )}
                     </Formik>

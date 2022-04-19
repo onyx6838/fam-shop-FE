@@ -28,19 +28,21 @@ const CategoryProduct = () => {
   const categories = useSelector(state => state.product.categories)
   const search = useSelector(state => state.product.search)
   const brand = useSelector(state => state.product.brand)
+  const typeOfGetProduct = useSelector(state => state.product.typeOfGetProduct)
 
   useEffect(() => {
     dispatch(fetchProductsFilter(
       {
         categories: categories,
         category: category,
-        selectedFilters: [],
-        page: 1,
+        selectedFilters: selectedFilters,
+        page: page,
         size: size,
         search: search,
-        brand: brand
+        brand: brand,
+        typeOfGetProduct: typeOfGetProduct
       }))
-  }, [brand, categories, category, dispatch, search, size])
+  }, [brand, categories, category, dispatch, page, search, selectedFilters, size, typeOfGetProduct])
 
   const rows = product.map((item) => (
     <TopProductItem info={item} key={item.maSP} grid={4} />
@@ -55,7 +57,8 @@ const CategoryProduct = () => {
         page: value,
         size: size,
         search: search,
-        brand: brand
+        brand: brand,
+        typeOfGetProduct: typeOfGetProduct
       }))
   }
 
@@ -65,7 +68,7 @@ const CategoryProduct = () => {
         <h3 className="tittle-w3l text-center">
           <span className="font-weight-normal">
             {
-              categoryName ? categoryName : search
+              search.length > 0 ? `Kết quả tìm kiếm cho : ${search}` : categoryName
             }
           </span>
         </h3>
@@ -92,7 +95,7 @@ const CategoryProduct = () => {
                   boundaryCount={1}
                   variant="outlined"
                   shape="rounded"
-                  onChange={handlePageChange}
+                  onChange={(e, value) => handlePageChange(e, value)}
                 />
               </div>
             </div>

@@ -9,7 +9,7 @@ import cart from '../../assets/images/cart.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectNumberCart } from '../../redux/selectors/cartSelector'
-import { changeSearch } from '../../redux/store/product'
+import { changeSearch, changeTypeOfGetProduct } from '../../redux/store/product'
 
 const formStyle = {
     maxWidth: '600px'
@@ -25,6 +25,7 @@ const HeaderBottom = () => {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         dispatch(changeSearch(text))
+        dispatch(changeTypeOfGetProduct('SEARCH'))
         navigate('/category')
     }
 

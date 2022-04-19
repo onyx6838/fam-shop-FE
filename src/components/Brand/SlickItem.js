@@ -9,18 +9,18 @@ const ImgItem = styled.div`
 
 const SlickItem = ({ info, changeBrandClick, choose }) => {
     const style = {
-        width: '200px',
+        width: '100%',
         height: '85px',
         cursor: 'pointer'
     }
 
     return (
-        <ImgItem className='card' choose={choose}>
+        <ImgItem className='card' choose={choose} style={{ width : "250px"}}>
             <img style={style}
                 className="card-img-top"
                 src={info.hinhAnh ? `http://127.0.0.1:8887/${info.hinhAnh}` : tb1}
                 alt=""
-                onClick={() => changeBrandClick(info)} />
+                onClick={changeBrandClick} />
         </ImgItem>
     )
 }

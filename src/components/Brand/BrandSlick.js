@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCategory, selectSelectedFilters, selectSize } from '../../redux/selectors/productSelector';
-import { fetchProductBrands, fetchProductsFilter } from '../../redux/store/product';
+import { fetchProductBrands, fetchProductsFilter, changeTypeOfGetProduct, changeBrand } from '../../redux/store/product';
 
 function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -41,26 +41,36 @@ const BrandSlick = () => {
     const brands = useSelector(state => state.product.brands)
     const brand = useSelector(state => state.product.brand)
     const selectedFilters = useSelector(selectSelectedFilters);
+    const typeOfGetProduct = useSelector(state => state.product.typeOfGetProduct)
 
     useEffect(() => {
         dispatch(fetchProductBrands({
             categories: categoryList,
             category: category,
-            listDacTrung: [],
-            search: search
+            search: search,
+            typeOfGetProduct: typeOfGetProduct
         }))
-    }, [category, categoryList, dispatch, search])
+    }, [category, categoryList, dispatch, search, typeOfGetProduct])
 
     const settings = {
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />
     };
 
-    const handleToggle = (info) => {   
+    const handleToggle = (info) => {
+        if (info.maThuongHieu !== brand) { // case này 1 là # 0 tức là lần đầu 2 là thay đổi brand
+            dispatch(changeBrand(info.maThuongHieu))
+            if (typeOfGetProduct === 'SEARCH') dispatch(changeTypeOfGetProduct('BRAND_SEARCH'))
+            else dispatch(changeTypeOfGetProduct('BRAND_CATEGORY'))
+        } else {
+            dispatch(changeBrand(0))
+            if (typeOfGetProduct === 'BRAND_SEARCH') dispatch(changeTypeOfGetProduct('SEARCH'))
+            else dispatch(changeTypeOfGetProduct('CATEGORY'))
+        }
         dispatch(fetchProductsFilter(
             {
                 categories: categoryList,
@@ -68,8 +78,9 @@ const BrandSlick = () => {
                 selectedFilters: selectedFilters,
                 page: 1,
                 size: size,
-                search : search,
-                brand: info.maThuongHieu === brand ? 0 : info.maThuongHieu
+                search: search,
+                brand: brand,
+                typeOfGetProduct: typeOfGetProduct
             }))
     }
 
@@ -80,7 +91,7 @@ const BrandSlick = () => {
                     <Slider {...settings}>
                         {
                             brands.map((item, _) => {
-                                return <SlickItem key={item.maThuongHieu} info={item} changeBrandClick={handleToggle}
+                                return <SlickItem key={item.maThuongHieu} info={item} changeBrandClick={() => handleToggle(item)}
                                     choose={brand === item.maThuongHieu ? true : false} />
                             })
                         }

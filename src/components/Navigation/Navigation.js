@@ -10,7 +10,7 @@ import NavLink from './NavLink'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container, NavItem } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { changeCategory, changeCategoryName } from '../../redux/store/product'
+import { changeCategory, changeCategoryName, changeTypeOfGetProduct } from '../../redux/store/product'
 
 const Navigation = () => {
 	const dispatch = useDispatch();
@@ -25,6 +25,8 @@ const Navigation = () => {
 	const handleOnClickItem = (item) => {
 		dispatch(changeCategory(item))
 		dispatch(changeCategoryName(item.ten))
+		//dispatch(changeSearch(''))
+		dispatch(changeTypeOfGetProduct('CATEGORY'))
 		navigate("/category")
 	}
 
@@ -32,6 +34,8 @@ const Navigation = () => {
 		e.stopPropagation();
 		dispatch(changeCategory(sub))
 		dispatch(changeCategoryName(sub.ten))
+		//dispatch(changeSearch(''))
+		dispatch(changeTypeOfGetProduct('CATEGORY'))
 		navigate("/category")
 	}
 

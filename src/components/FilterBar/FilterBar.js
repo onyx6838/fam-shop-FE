@@ -8,7 +8,7 @@ import '../../assets/css/fontawesome-all.css'
 import FilterBarItem from './FilterBarItem'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductFeatures, fetchProductsFilter } from '../../redux/store/product'
+import { changeSelectedFilters, fetchProductFeatures, fetchProductsFilter } from '../../redux/store/product'
 import { selectCategory, selectSelectedFilters, selectSize } from '../../redux/selectors/productSelector'
 
 const FilterBar = () => {
@@ -20,15 +20,16 @@ const FilterBar = () => {
     const categoryList = useSelector(state => state.product.categories)
     const search = useSelector(state => state.product.search)
     const brand = useSelector(state => state.product.brand)
+    const typeOfGetProduct = useSelector(state => state.product.typeOfGetProduct)
 
     useEffect(() => {
         dispatch(fetchProductFeatures({
             categories: categoryList,
             category: category,
-            listDacTrung: [],
-            search : search
+            search : search,
+            typeOfGetProduct: typeOfGetProduct
         }))
-    }, [category, categoryList, dispatch, search])
+    }, [category, categoryList, dispatch, search, typeOfGetProduct])
 
     var keys = Object.keys(dactrung);
 
@@ -41,7 +42,7 @@ const FilterBar = () => {
         } else {
             newChecked.splice(currentIndex, 1);
         }
-
+        dispatch(changeSelectedFilters(newChecked))
         dispatch(fetchProductsFilter(
             {
                 categories: categoryList,
@@ -50,7 +51,8 @@ const FilterBar = () => {
                 page: 1,
                 size: size,
                 search : search,
-                brand: brand
+                brand: brand,
+                typeOfGetProduct: typeOfGetProduct
             }))
     }
 
