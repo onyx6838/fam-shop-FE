@@ -16,7 +16,8 @@ const TopProductItem = ({ info, grid }) => {
         <div className={`col-md-${grid} product-men mt-md-0 mt-5`}>
             <div className="men-pro-item simpleCart_shelfItem">
                 <div className="men-thumb-item text-center">
-                    <img src={info ? `http://127.0.0.1:8887/${info.hinhAnh}` : i1} alt="" className="img-fluid" style={{ height: '207.99px' }} />
+                    {/* <img src={info ? `http://127.0.0.1:8887/${info.hinhAnh}` : i1} alt="" className="img-fluid" style={{ height: '207.99px' }} /> */}
+                    <img src={info ? `${info.hinhAnh}` : i1} alt="" className="img-fluid" style={{ height: '207.99px' }} />
                     <div className="men-cart-pro">
                         <div className="inner-men-cart-pro">
                             <Link to={{
@@ -24,7 +25,7 @@ const TopProductItem = ({ info, grid }) => {
                             }} className="link-product-add-cart">Xem chi tiết</Link>
                         </div>
                     </div>
-                    <span className="product-new-top">Mới</span>
+                    {/* <span className="product-new-top">Mới</span> */}
                 </div>
                 <div className="item-info-product text-center mt-2">
                     <div style={{ "height": "100px" }}>

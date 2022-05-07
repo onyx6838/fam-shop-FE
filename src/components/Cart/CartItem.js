@@ -10,7 +10,8 @@ const CartItem = ({ info, i }) => {
             <td className="invert">{i}</td>
             <td className="invert-image">
                 <a href="single.html">
-                    <img src={info && `http://127.0.0.1:8887/${info.hinhAnh}`} alt=" " className="img-responsive" />
+                    {/* <img src={info && `http://127.0.0.1:8887/${info.hinhAnh}`} alt=" " className="img-responsive" /> */}
+                    <img src={info && info.hinhAnh} alt=" " className="img-responsive" style={{ 'width': '100px' }} />
                 </a>
             </td>
             <td className="invert">

@@ -53,7 +53,7 @@ const Navigation = () => {
 												{item.ten} &raquo;
 											</Link> */}
 											{item.ten} &raquo;
-											<Dropdown.Submenu position='right'>
+											<Dropdown.Submenu position='right' style={{ 'width': '250px' }}>
 												{
 													item.loaiSPConList.map((sub, i) => (
 														<Dropdown.Item key={i} onClick={(e) => handleOnClickSubItem(e, sub)}>{sub.ten}

@@ -26,6 +26,10 @@ const TopProduct = ({ categoryList, name }) => {
         setVisible(visible => visible + 4)
     }
 
+    const refreshVisibleProduct = () => {
+        setVisible(4)
+    }
+
     return (
         <>
             {
@@ -58,6 +62,14 @@ const TopProduct = ({ categoryList, name }) => {
                                     (
                                         <Col lg={12} className='d-flex justify-content-center'>
                                             <button className="btn btn-style btn-style-secondary" onClick={handleChangeVisibleProduct}>Xem thêm</button>
+                                        </Col>
+                                    )
+                                }
+                                {
+                                    visible > sanphams.length && sanphams.length > 4 &&
+                                    (
+                                        <Col lg={12} className='d-flex justify-content-center'>
+                                            <button className="btn btn-style btn-style-secondary" onClick={refreshVisibleProduct}>Thu gọn</button>
                                         </Col>
                                     )
                                 }

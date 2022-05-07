@@ -10,7 +10,6 @@ import { map } from 'lodash'
  * thunk
  */
 export const fetchProductsFilter = createAsyncThunk('product/fetchFilter', async (data, { rejectWithValue }) => {
-    console.log("filter");
     let { categories, page, size, category, selectedFilters, search, brand, typeOfGetProduct } = data;
     switch (typeOfGetProduct) {
         case 'SEARCH':  // k có brand từ ngoài vào
@@ -113,7 +112,7 @@ const slice = createSlice({
         totalElements: 0,
         totalPages: 0,
         page: 1,
-        size: 2,
+        size: 3,
         // filter by category
         category: 0,
         categoryName: '',

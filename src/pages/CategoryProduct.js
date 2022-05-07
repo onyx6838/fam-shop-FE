@@ -65,42 +65,55 @@ const CategoryProduct = () => {
   return (
     <div className='ads-grid py-sm-5 py-4'>
       <Container className="py-xl-4 py-lg-2">
-        <h3 className="tittle-w3l text-center">
-          <span className="font-weight-normal">
-            {
-              search.length > 0 ? `Kết quả tìm kiếm cho : ${search}` : categoryName
-            }
-          </span>
-        </h3>
-        <BrandSlick />
-        <Row>
-          <FilterBar />
-          <div className="agileinfo-ads-display col-lg-9 order-lg-last order-first">
-            <div className="wrapper">
-              {
-                product && chunk(rows, 3).map((item, i) => (
-                  <div className="product-sec1 px-lg-4 mb-5" key={i}>
-                    <Row>
-                      {item}
-                    </Row>
+        {
+          product ? (
+            <>
+              <h3 className="tittle-w3l text-center">
+                <span className="font-weight-normal">
+                  {
+                    typeOfGetProduct === 'CATEGORY' || typeOfGetProduct === 'BRAND_CATEGORY' ? 
+                    categoryName : (search.length > 0 && `Kết quả tìm kiếm cho : ${search}`)
+                  }
+                </span>
+              </h3>
+              <BrandSlick />
+              <Row>
+                <FilterBar />
+                <div className="agileinfo-ads-display col-lg-9 order-lg-last order-first">
+                  <div className="wrapper">
+                    {
+                      product && chunk(rows, 3).map((item, i) => (
+                        <div className="product-sec1 px-lg-4 mb-5" key={i}>
+                          <Row>
+                            {item}
+                          </Row>
+                        </div>
+                      ))
+                    }
+                    <div className="product-sec1 px-lg-4 mt-5">
+                      <br />
+                      <Pagination
+                        count={totalPages}
+                        page={page}
+                        siblingCount={1}
+                        boundaryCount={1}
+                        variant="outlined"
+                        shape="rounded"
+                        onChange={(e, value) => handlePageChange(e, value)}
+                      />
+                    </div>
                   </div>
-                ))
-              }
-              <div className="product-sec1 px-lg-4 mt-5">
-                <br />
-                <Pagination
-                  count={totalPages}
-                  page={page}
-                  siblingCount={1}
-                  boundaryCount={1}
-                  variant="outlined"
-                  shape="rounded"
-                  onChange={(e, value) => handlePageChange(e, value)}
-                />
-              </div>
-            </div>
-          </div>
-        </Row>
+                </div>
+              </Row>
+            </>
+          ) : (
+            <h3 className="tittle-w3l text-center">
+              <span className="font-weight-normal">
+                Không có sản phẩm
+              </span>
+            </h3>
+          )
+        }
       </Container >
     </div >
   )

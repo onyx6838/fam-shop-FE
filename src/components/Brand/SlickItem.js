@@ -18,7 +18,8 @@ const SlickItem = ({ info, changeBrandClick, choose }) => {
         <ImgItem className='card' choose={choose} style={{ width : "250px"}}>
             <img style={style}
                 className="card-img-top"
-                src={info.hinhAnh ? `http://127.0.0.1:8887/${info.hinhAnh}` : tb1}
+                // src={info.hinhAnh ? `http://127.0.0.1:8887/${info.hinhAnh}` : tb1}
+                src={info.hinhAnh}
                 alt=""
                 onClick={changeBrandClick} />
         </ImgItem>
