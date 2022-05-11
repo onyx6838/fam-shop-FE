@@ -3,6 +3,8 @@ import FormData from 'form-data';
 
 const url = "/login";
 
+const url1 = "/taikhoan";
+
 const login = (username, password) => {
     var body = new FormData();
     body.append('username', username);
@@ -11,5 +13,9 @@ const login = (username, password) => {
     return Api.post(`${url}`, body)
 };
 
-const api = { login }
+const register = (form) => {
+    return Api.post(`${url1}/register`, form)
+}
+
+const api = { login, register }
 export default api;

@@ -12,6 +12,7 @@ import React from "react";
 import CategoryProduct from "./CategoryProduct";
 import Login from "./Login";
 import withAuth from "../HOC/withAuth";
+import Register from "./Register";
 
 function App() {
   const ProtectedRoutes = {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/payment' element={<ProtectedRoutes.Payment />}></Route>
         <Route path='/category' element={<CategoryProduct />}></Route>
         <Route path='/login' element={<Login />}></Route>
+        <Route path='/register' element={<Register />}></Route>
       </Routes>
       <Footer />
     </>

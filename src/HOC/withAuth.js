@@ -7,7 +7,7 @@ export default function withAuth(AuthenticatedComponent) {
     //const isAuth = useSelector(state => state.user.isAuth)
     
     return !storage.isAuth() ? (
-      <Navigate to="/login" />
+      <Navigate to="/login" replace />
     ) : (
       <AuthenticatedComponent {...props} />
     );

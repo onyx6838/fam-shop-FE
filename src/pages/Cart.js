@@ -50,7 +50,7 @@ const Cart = () => {
                             </p>
                             <ul style={{ color: 'black' }}>
                                 <li className="mb-1">
-                                    Tạm tính ({cartList.length}) :
+                                    Tạm tính ({cartList.length}) : &nbsp;
                                     {
                                         cartList.reduce((accu, item) =>
                                             (accu += item.qty * item.donGiaBan), 0
@@ -62,7 +62,12 @@ const Cart = () => {
                                 </li>
                             </ul>
                             <p className="my-sm-4 my-3">
-                                <i className="far fa-hand-point-right mr-2"></i>Tổng Cộng:
+                                <i className="far fa-hand-point-right mr-2"></i>Tổng Cộng:&nbsp;
+                                {
+                                    cartList.reduce((accu, item) =>
+                                        (accu += item.qty * item.donGiaBan), 0
+                                    )
+                                }
                             </p>
                         </div>
                         <div className="checkout-left">
