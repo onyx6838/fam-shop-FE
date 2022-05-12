@@ -26,10 +26,6 @@ const CheckoutForm = ({ cartList }) => {
                 paymentType: ''
             }}
             onSubmit={async (values, actions) => {
-                // setTimeout(() => {
-                //     alert(JSON.stringify(values, null, 2));
-                //     actions.setSubmitting(false);
-                // }, 1000);
                 const response = DonDatHangApi.payment({ ...values, cartList })
                 response.then((rs) => {
                     Swal.fire({
@@ -45,7 +41,7 @@ const CheckoutForm = ({ cartList }) => {
                           left top
                           no-repeat
                         `
-                    }).then((rs) => navigate("/"))
+                    }).then((rs) => navigate("/payment-success", { state: { replace: true, orderInfo: values } }))
                 })
             }}
             validateOnChange={false}

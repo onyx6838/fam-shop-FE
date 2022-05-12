@@ -6,7 +6,8 @@ const CartItemPayment = ({ info }) => {
             <div className="card bg-light" style={{ color: '#fdb03d' }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src={info && `http://127.0.0.1:8887/${info.hinhAnh}`} className="img-fluid rounded-start" alt="..." />
+                        {/* <img src={info && `http://127.0.0.1:8887/${info.hinhAnh}`} className="img-fluid rounded-start" alt="..." /> */}
+                        <img src={info.hinhAnh} className="img-fluid rounded-start" alt="..." />
                     </div>
                     <div className="col-md-8">
                         <div className="card-header bg-transparent border-dark">{info.ten}</div>
