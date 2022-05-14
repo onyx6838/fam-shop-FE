@@ -8,14 +8,25 @@ import Product from "./Product";
 import Details from "./Details";
 import Cart from "./Cart";
 import Payment from "./Payment";
-import React from "react";
+import React, { useEffect } from "react";
 import CategoryProduct from "./CategoryProduct";
 import Login from "./Login";
 import withAuth from "../HOC/withAuth";
 import Register from "./Register";
 import PaymentSuccess from "./PaymentSuccess";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../redux/store/cart";
 
 function App() {
+  const dispatch = useDispatch()
+  const userInfo = useSelector(state => state.user.userInfo)
+
+  useEffect(() => {
+    if (userInfo.tenTK) {
+      dispatch(fetchCart({ tenTK: userInfo.tenTK }));
+    }
+  }, [dispatch, userInfo.tenTK])
+
   const ProtectedRoutes = {
     Payment: withAuth(Payment)
   }

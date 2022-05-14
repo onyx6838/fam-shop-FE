@@ -16,10 +16,13 @@ import { setRefreshToken, setRememberMe, setToken, setUserInfo } from '../redux/
 
 import UserApi from '../api/UserApi'
 import storage from '../storage/storage';
+import { saveLocalCart } from '../redux/store/cart';
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const cart = useSelector(state => state.cart.cart)
 
     const [isRememberMe, setRemember] = useState(useSelector(state => state.user.isRememberMe));
 
@@ -58,6 +61,13 @@ const Login = () => {
                                         dispatch(setUserInfo(user))
                                         dispatch(setToken(user.token))
                                         dispatch(setRefreshToken(user.refreshToken))
+                                        // synchronize cart to db
+                                        if (cart.length > 0) {
+                                            dispatch(saveLocalCart({
+                                                tenTK: values.username,
+                                                cart: cart
+                                            }))
+                                        }
                                         navigate("/home")
                                     }
                                     catch (error) {
@@ -67,9 +77,6 @@ const Login = () => {
                                             console.log(error);
                                         }
                                     }
-                                    // dispatch(fetchLogin(values))
-                                    // dispatch(setAuth(true))
-                                    // dispatch(setRememberMe(values.rememberMe))
                                 }}
                                 validateOnChange={false}
                                 validateOnBlur={false}
@@ -96,7 +103,7 @@ const Login = () => {
                                             <Col lg={12}>
                                                 <Row>
                                                     <Col lg={6}>
-                                                        <label style={{'float':'left'}}>Ghi nhớ</label>
+                                                        <label style={{ 'float': 'left' }}>Ghi nhớ</label>
                                                     </Col>
                                                     <Col lg={6}>
                                                         <input type='checkbox' name='rememberMe'

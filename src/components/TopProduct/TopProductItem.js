@@ -6,11 +6,26 @@ import '../../assets/css/fontawesome-all.css'
 
 import i1 from '../../assets/images/m1.png'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { addCart } from '../../redux/store/cart'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCart, addToCart, fetchCart } from '../../redux/store/cart'
 
 const TopProductItem = ({ info, grid }) => {
     const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.user.userInfo)
+
+    const addToCartWithCheck = () => {
+        if(userInfo.email) {
+            dispatch(addToCart(
+                {
+                    email: userInfo.email,
+                    maSP: info.maSP,
+                    qty: 1
+                }
+            ));
+            dispatch(fetchCart({ tenTK: userInfo.tenTK }));
+        }
+        else dispatch(addCart(info))
+    }
 
     return (
         <div className={`col-md-${grid} product-men mt-md-0 mt-5`}>
@@ -38,7 +53,7 @@ const TopProductItem = ({ info, grid }) => {
                     </div>
                     <div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                         <button className="btn btn-style btn-style-secondary mt-3"
-                            onClick={() => dispatch(addCart(info))}>Thêm vào giỏ</button>
+                            onClick={addToCartWithCheck}>Thêm vào giỏ</button>
                     </div>
                 </div>
 

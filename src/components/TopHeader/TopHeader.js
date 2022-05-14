@@ -7,7 +7,7 @@ import '../../assets/css/fontawesome-all.css'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import storage from '../../storage/storage'
-import { setRefreshToken, setRememberMe, setToken, setUserInfo } from '../../redux/store/user'
+import { setRefreshToken, setToken, setUserInfo } from '../../redux/store/user'
 
 const TopHeader = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,6 @@ const TopHeader = () => {
 
   const logout = () => {
     storage.removeUserInfo();
-    dispatch(setRememberMe(false))
     dispatch(setUserInfo(""))
     dispatch(setToken(""))
     dispatch(setRefreshToken(""))
@@ -58,8 +57,8 @@ const TopHeader = () => {
                 <li className="mx-3">
                   <Dropdown
                     className="d-inline-block"
-                    onMouseOver={() => setdropdownOpen(true)}
-                    onMouseLeave={() => setdropdownOpen(false)}
+                    // onMouseOver={() => setdropdownOpen(true)}
+                    // onMouseLeave={() => setdropdownOpen(false)}
                     onToggle={() => setdropdownOpen(prevState => !prevState)}
                     show={dropdownOpen}
                   >

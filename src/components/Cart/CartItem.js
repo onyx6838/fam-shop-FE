@@ -1,9 +1,51 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import { decreaseQuantity, increaseQuantity, removeFromCart } from '../../redux/store/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeQuantityToCart, decreaseQuantity, fetchCart, increaseQuantity, removeCart, removeFromCart } from '../../redux/store/cart';
 
 const CartItem = ({ info, i }) => {
     const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.user.userInfo);
+
+    const decreaseQuantityWithCheck = () => {
+        if (userInfo.email) {
+            dispatch(changeQuantityToCart(
+                {
+                    email: userInfo.email,
+                    maSP: info.maSP,
+                    qty: -1
+                }
+            ));
+            dispatch(fetchCart({ tenTK: userInfo.tenTK }));
+        }
+        else dispatch(decreaseQuantity(info))
+    }
+
+    const increaseQuantityWithCheck = () => {
+        if (userInfo.email) {
+            dispatch(changeQuantityToCart(
+                {
+                    email: userInfo.email,
+                    maSP: info.maSP,
+                    qty: 1
+                }
+            ));
+            dispatch(fetchCart({ tenTK: userInfo.tenTK }));
+        }
+        else dispatch(increaseQuantity(info))
+    }
+
+    const removeCartWithCheck = () => {
+        if (userInfo.email) {
+            dispatch(removeCart(
+                {
+                    email: userInfo.email,
+                    maSP: info.maSP
+                }
+            ));
+            dispatch(fetchCart({ tenTK: userInfo.tenTK }));
+        }
+        else dispatch(removeFromCart(info))
+    }
 
     return (
         <tr className={`rem` + i} key={info.maSP}>
@@ -17,11 +59,11 @@ const CartItem = ({ info, i }) => {
             <td className="invert">
                 <div className="quantity">
                     <div className="quantity-select">
-                        <div className="entry value-minus" onClick={() => dispatch(decreaseQuantity(info))}>&nbsp;</div>
+                        <div className="entry value-minus" onClick={decreaseQuantityWithCheck}>&nbsp;</div>
                         <div className="entry value">
                             <span>{info.qty}</span>
                         </div>
-                        <div className="entry value-plus" onClick={() => dispatch(increaseQuantity(info))}>&nbsp;</div>
+                        <div className="entry value-plus" onClick={increaseQuantityWithCheck}>&nbsp;</div>
                     </div>
                 </div>
             </td>
@@ -29,7 +71,7 @@ const CartItem = ({ info, i }) => {
             <td className="invert">{info.qty * info.donGiaBan}đ</td>
             <td className="invert">
                 <div className="rem">
-                    <div className="close1" onClick={() => dispatch(removeFromCart(info))}> </div>
+                    <div className="close1" onClick={removeCartWithCheck}></div>
                 </div>
             </td>
         </tr>

@@ -9,8 +9,8 @@ import '../assets/css/popuo-box.css';
 import '../assets/css/fontawesome-all.css';
 
 import SanPhamApi from '../api/SanPhamApi'
-import { useDispatch } from 'react-redux';
-import { addCart } from '../redux/store/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart, addToCart, fetchCart } from '../redux/store/cart';
 
 import parse from 'html-react-parser';
 
@@ -23,6 +23,8 @@ const Details = () => {
   const [quantityAddToCart, setQuantityAddToCart] = useState(1);
 
   const [dataImage, setDataImage] = useState([])
+
+  const userInfo = useSelector(state => state.user.userInfo)
 
   useEffect(() => {
     const response = SanPhamApi.getById(`${id}`);
@@ -39,29 +41,7 @@ const Details = () => {
   }, [id]);
 
   const th = productDetail.thuongHieu;
-
-  // const data = [
-  //   {
-  //     image: productDetail.hinhAnh && `http://127.0.0.1:8887/${productDetail.hinhAnh}`,
-  //     text: "img1"
-  //   },
-  //   {
-  //     image:
-  //       "https://firebasestorage.googleapis.com/v0/b/fam-shop-4fd26.appspot.com/o/product%2F1ec48dc1-0e09-4820-bbcc-d9517c12431f.jpg?alt=media&token=978f01ef-22e8-402f-8efd-d5f263a8925b",
-  //     text: "img2"
-  //   },
-  //   {
-  //     image:
-  //       "https://lzd-img-global.slatic.net/g/ff/kf/Sbf3c4fd6c74a4d9384c6788d21c895d4K.jpg_720x720q80.jpg_.webp",
-  //     text: "img3"
-  //   },
-  //   {
-  //     image:
-  //       "https://lzd-img-global.slatic.net/g/ff/kf/Sb0bf76a91f194f2eaa25ebd10658b4dbA.jpg_720x720q80.jpg_.webp",
-  //     text: "img4"
-  //   }
-  // ];
-
+  
   const increaseQuantity = () => {
     setQuantityAddToCart(quantityAddToCart => Math.min(quantityAddToCart + 1, productDetail.soLuong))
   }
@@ -70,12 +50,24 @@ const Details = () => {
     setQuantityAddToCart(quantityAddToCart => Math.max(quantityAddToCart - 1, 1))
   }
 
-  const addToCart = () => {
-    const data = {
-      ...productDetail,
-      qty: quantityAddToCart
+  const addToCartWithCheck = () => {
+    if (userInfo.email) {
+      dispatch(addToCart(
+        {
+          email: userInfo.email,
+          maSP: productDetail.maSP,
+          qty: quantityAddToCart
+        }
+      ));
+      dispatch(fetchCart({ tenTK: userInfo.tenTK }));
     }
-    dispatch(addCart(data));
+    else {
+      const data = {
+        ...productDetail,
+        qty: quantityAddToCart
+      }
+      dispatch(addCart(data));
+    }
   }
 
   return (
@@ -115,7 +107,7 @@ const Details = () => {
                           <div className="entry value-plus" onClick={increaseQuantity}>&nbsp;</div>
                         </div>
                       </div>
-                      <button className="btn btn-style btn-style-secondary mt-3" onClick={addToCart}>Thêm vào giỏ</button>
+                      <button className="btn btn-style btn-style-secondary mt-3" onClick={addToCartWithCheck}>Thêm vào giỏ</button>
                     </div>
                   </div>
                 </Col>
