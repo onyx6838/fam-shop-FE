@@ -11,24 +11,6 @@ import { setRefreshToken, setToken, setUserInfo } from '../../redux/store/user'
 
 const TopHeader = () => {
   const dispatch = useDispatch();
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [isOpenRegister, setIsOpenRegister] = useState(false);
-
-  // const showModal = () => {
-  //   setIsOpen(true);
-  // };
-
-  // const hideModal = () => {
-  //   setIsOpen(false);
-  // };
-
-  // const showModalRegister = () => {
-  //   setIsOpenRegister(true);
-  // };
-
-  // const hideModalRegister = () => {
-  //   setIsOpenRegister(false);
-  // };
 
   const [dropdownOpen, setdropdownOpen] = useState(false);
   const userInfo = useSelector(state => state.user.userInfo)
@@ -49,10 +31,6 @@ const TopHeader = () => {
           </Col>
           <Col lg={9} sm={8} className="header-right ml-auto text-sm-right text-center">
             <ul className="top-header-lists">
-              {/* <li className="mx-3">
-                <i className="fas fa-sign-in-alt mr-1" style={{ cursor: 'pointer' }} onClick={showModal}></i>
-                <span style={{ cursor: 'pointer' }} onClick={showModal}>Đăng nhập Modal</span>
-              </li> */}
               {userInfo.hoTen && (
                 <li className="mx-3">
                   <Dropdown
@@ -65,14 +43,18 @@ const TopHeader = () => {
                     <Dropdown.Toggle>
                       {userInfo.hoTen}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu >
                       <Dropdown.Item>
-                        <i className="fa fa-user-circle"></i>
-                        <span>Tài khoản</span>
+                        <Link to='/user/profile'>
+                          <i className="fa fa-user-circle"></i>
+                          <span>Tài khoản</span>
+                        </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <i className="fas fa-truck"></i>
-                        <span>Quản lý đơn hàng</span>
+                        <Link to='/user/order-management' >
+                          <i className="fa fa-truck"></i>
+                          <span>Quản lý đơn hàng</span>
+                        </Link>
                       </Dropdown.Item>
                       <Dropdown.Item onClick={logout}>
                         <i className="fa fa-sign-out-alt"></i>

@@ -22,5 +22,9 @@ const payment = (data) => {
     return Api.post(`${url}/payment`, request)
 };
 
-const api = { payment }
+const getDonDatHangByKhachHang = (tenTK, page, size) => {
+    return Api.get(`${url}/user-order-management?tenTK=${tenTK}&page=${page}&size=${size}`)
+}
+
+const api = { payment, getDonDatHangByKhachHang }
 export default api;

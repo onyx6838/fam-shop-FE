@@ -17,5 +17,9 @@ const register = (form) => {
     return Api.post(`${url1}/register`, form)
 }
 
-const api = { login, register }
+const changeProfile = (form) => {
+    return Api.post(`${url1}/profile-update`, form)
+}
+
+const api = { login, register, changeProfile }
 export default api;

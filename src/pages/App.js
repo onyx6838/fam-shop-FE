@@ -16,6 +16,9 @@ import Register from "./Register";
 import PaymentSuccess from "./PaymentSuccess";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "../redux/store/cart";
+import User from "./User";
+import Profile from "../components/Profile/Profile";
+import OrderManagement from "../components/Profile/OrderManagement";
 
 function App() {
   const dispatch = useDispatch()
@@ -28,7 +31,8 @@ function App() {
   }, [dispatch, userInfo.tenTK])
 
   const ProtectedRoutes = {
-    Payment: withAuth(Payment)
+    Payment: withAuth(Payment),
+    User: withAuth(User)
   }
 
   return (
@@ -47,6 +51,10 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/payment-success' element={<PaymentSuccess />}></Route>
+        <Route path='/user' element={<ProtectedRoutes.User />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="order-management" element={<OrderManagement />} />
+        </Route>
       </Routes>
       <Footer />
     </>
