@@ -38,19 +38,19 @@ const Profile = () => {
         <Row>
           <Col lg={12} className="form-group row">
             <label className="col-lg-2 col-form-label">Họ Tên</label>
-            <input type="text" name="hoTen" class="form-control col-lg-10" placeholder="Họ tên"
+            <input type="text" name="hoTen" className="form-control col-lg-10" placeholder="Họ tên"
               onChange={formik.handleChange}
               value={formik.values.hoTen} />
           </Col>
           <Col lg={12} className="form-group row">
             <label className="col-lg-2 col-form-label">Email</label>
-            <input type="text" name="email" class="form-control col-lg-10" placeholder="Email"
+            <input type="text" name="email" className="form-control col-lg-10" placeholder="Email"
               onChange={formik.handleChange}
               value={formik.values.email} />
           </Col>
           <Col lg={12} className="form-group row">
             <label className="col-lg-2 col-form-label">Địa chỉ</label>
-            <input type="text" name="diaChi" class="form-control col-lg-10" placeholder="Địa chỉ"
+            <input type="text" name="diaChi" className="form-control col-lg-10" placeholder="Địa chỉ"
               onChange={formik.handleChange}
               value={formik.values.diaChi} />
           </Col>

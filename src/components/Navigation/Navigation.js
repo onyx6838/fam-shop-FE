@@ -6,7 +6,7 @@ import '../../assets/css/fontawesome-all.css'
 import LoaiSanPhamApi from '../../api/LoaiSanPhamApi'
 
 import Dropdown from 'react-multilevel-dropdown'
-import NavLink from './NavLink'
+import NavLinkEle from './NavLinkEle'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container, NavItem } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
@@ -43,7 +43,7 @@ const Navigation = () => {
 		<div className="navbar-inner">
 			<Container>
 				<nav className="navbar navbar-expand-lg navbar-light">
-					<Dropdown position='right' title={<NavLink content="Thể Loại" />} buttonClassName="navbar-nav">
+					<Dropdown position='right' title={<NavLinkEle content="Thể Loại" />} buttonClassName="navbar-nav">
 						{
 							loaisanphams.map((item) => {
 								return (

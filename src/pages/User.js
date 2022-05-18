@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { setRefreshToken, setToken, setUserInfo } from '../redux/store/user';
-import { Col, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
 import storage from '../storage/storage';
 

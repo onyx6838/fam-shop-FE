@@ -21,7 +21,6 @@ const Banner = () => {
                                 <span>10%</span> giá gốc
                             </p>
                             <h3 className="mt-2">Bánh Ngon Bán Tại Cửa Hàng</h3>
-                            {/* <a className="btn btn-style mt-4" href="/Product/Index">Mua Hàng Ngay</a> */}
                         </div>
                     </Container>
                 </div>
@@ -34,7 +33,6 @@ const Banner = () => {
                                 <span>Cà Phê</span>
                             </p>
                             <h3 className="mt-2">G7 vừa nhập về</h3>
-                            {/* <a className="btn btn-style mt-4" href="/Product/Index">Mua Hàng Ngay</a> */}
                         </div>
                     </Container>
                 </div>
@@ -48,7 +46,6 @@ const Banner = () => {
                                 <span>Gói thêm 25% số lượng</span>
                             </p>
                             <h3 className="mt-2">Kẹo Sữa Nay Thêm Kẹo Sữa</h3>
-                            {/* <a className="btn btn-style mt-4" href="/Product/Index">Mua Hàng Ngay</a> */}
                         </div>
                     </Container>
                 </div>
@@ -62,7 +59,6 @@ const Banner = () => {
                                 <span>Bán Chạy</span>
                             </p>
                             <h3 className="mt-2">Nước Giải Khát Ngon, Tuyệt Vời</h3>
-                            {/* <a className="btn btn-style mt-4" href="/Product/Index">Mua Hàng Ngay</a> */}
                         </div>
                     </Container>
                 </div>
