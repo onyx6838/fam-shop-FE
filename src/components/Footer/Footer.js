@@ -4,15 +4,29 @@ import '../../assets/css/style.css'
 import '../../assets/css/popuo-box.css'
 import '../../assets/css/fontawesome-all.css'
 
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import LoaiSanPhamApi from '../../api/LoaiSanPhamApi'
+import { changeCategory, changeCategoryName, changeTypeOfGetProduct } from '../../redux/store/product'
 
 const Footer = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [loaisanphams, setLoaiSanPhams] = useState([]);
 
     useEffect(() => {
         const response = LoaiSanPhamApi.getAll();
         response.then(res => setLoaiSanPhams(res));
     }, [])
+
+    const handleOnClickItem = (item, e) => {
+        e.preventDefault();
+        dispatch(changeCategory(item))
+        dispatch(changeCategoryName(item.ten))
+        //dispatch(changeSearch(''))
+        dispatch(changeTypeOfGetProduct('CATEGORY'))
+        navigate("/category")
+    }
 
     return (
         <footer>
@@ -67,7 +81,7 @@ const Footer = () => {
                                         return (
                                             item.loaiSPConList.length > 0 && (
                                                 <li className="mb-3" key={item.maLoai}>
-                                                    <a href="/">{item.ten}</a>
+                                                    <Link to='/' onClick={(e) => handleOnClickItem(item, e)}>{item.ten}</Link>
                                                 </li>
                                             )
                                         )

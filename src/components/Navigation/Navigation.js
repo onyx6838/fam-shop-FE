@@ -74,11 +74,8 @@ const Navigation = () => {
 								<Link className="nav-link" to="/home">Trang Chủ</Link>
 							</NavItem>
 							{/* <NavItem className="mr-lg-2 mb-lg-0 mb-2">
-								<Link className="nav-link" to="/product">Sản Phẩm</Link>
-							</NavItem> */}
-							<NavItem className="mr-lg-2 mb-lg-0 mb-2">
 								<Link className="nav-link" to="/">Liên hệ</Link>
-							</NavItem>
+							</NavItem> */}
 						</ul>
 					</div>
 				</nav>
