@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import tb1 from '../../assets/images/tb5.png'
-
 const ImgItem = styled.div`
         border : ${({ choose }) => choose ? `2px solid #292560` : `2px solid white`}
 `;
