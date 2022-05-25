@@ -35,7 +35,7 @@ const CommentBox = ({ maSPDanhGia }) => {
             <h3 className="aside-title ">Hỏi đáp về sản phẩm</h3>
             <div className="comments-grids">
                 {
-                    comments.map((item) => (
+                    comments.filter(item=> item.trangThai === 'CONG_BO').map((item) => (
                         <CommentLine data={item} key={item.maDanhGia} maSPDanhGia={maSPDanhGia} />
                     ))
                 }

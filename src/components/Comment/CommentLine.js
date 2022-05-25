@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import i1 from '../../assets/images/user-icon.png'
+import i1 from '../../assets/images/user-icon.jpg'
 import '../../assets/css/fontawesome-all.css'
+import './comment.css'
 import CommentForm from './CommentForm'
 
 import { useSelector } from 'react-redux'
@@ -56,8 +57,11 @@ const CommentLine = ({ data, maSPDanhGia }) => {
                     <p>{data.noiDung}</p>
                     {
                         openChildCmt && (
-                            childCmt.map((item) => (
-                                <div className="media mb-0 border-0 px-0 media-2 mt-5" key={item.maDanhGia}>
+                            childCmt.filter(item => item.trangThai === 'CONG_BO' || item.trangThai === 'QUAN_TRI_VIEN').map((item) => (
+                                <div className="media mb-0 border-0 px-0 media-2 mt-5" key={item.maDanhGia}
+                                    style={{
+                                        backgroundColor: item.trangThai === 'QUAN_TRI_VIEN' ? '#f7f1f2' : 'white'
+                                    }}>
                                     <a className="comment-img" href="#url">
                                         <img src={i1} className="img-fluid" width="100px" alt="" />
                                     </a>
@@ -65,7 +69,7 @@ const CommentLine = ({ data, maSPDanhGia }) => {
                                         <h5>{item.tenNguoiDanhGia}</h5>
                                         <ul className="p-0 comment">
                                             <li className="">{item.ngayTaoDanhGia}</li>
-                                            {
+                                            {/* {
                                                 userInfo.email !== item.emailNguoiDanhGia &&
                                                 (
                                                     <li>
@@ -74,7 +78,7 @@ const CommentLine = ({ data, maSPDanhGia }) => {
                                                         </a>
                                                     </li>
                                                 )
-                                            }
+                                            } */}
                                         </ul>
                                         <p>{item.noiDung}</p>
                                     </div>
