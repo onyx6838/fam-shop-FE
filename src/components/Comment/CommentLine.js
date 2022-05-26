@@ -53,7 +53,9 @@ const CommentLine = ({ data, maSPDanhGia }) => {
                             )
                         }
                     </ul>
-                    <p style={{ 'color': 'red', 'fontWeight': 'bold', 'cursor': 'pointer' }} onClick={() => replyBox(data.maDanhGia)}>@ Thảo luận</p>
+                    <p style={{ 'color': 'red', 'fontWeight': 'bold', 'cursor': 'pointer' }} onClick={() => replyBox(data.maDanhGia)}>
+                        <span className='badge badge-secondary'>@ Thảo luận</span>
+                    </p>
                     <p>{data.noiDung}</p>
                     {
                         openChildCmt && (
@@ -66,7 +68,7 @@ const CommentLine = ({ data, maSPDanhGia }) => {
                                         <img src={i1} className="img-fluid" width="100px" alt="" />
                                     </a>
                                     <div className="media-body comments-grid-right">
-                                        <h5>{item.tenNguoiDanhGia}</h5>
+                                        <h5>{item.trangThai === 'QUAN_TRI_VIEN' ? item.tenNguoiDanhGia + " (Quản trị viên)" : item.tenNguoiDanhGia}</h5>
                                         <ul className="p-0 comment">
                                             <li className="">{item.ngayTaoDanhGia}</li>
                                             {/* {

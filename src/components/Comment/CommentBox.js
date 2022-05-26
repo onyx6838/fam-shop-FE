@@ -32,7 +32,7 @@ const CommentBox = ({ maSPDanhGia }) => {
 
     return (
         <div className="comments">
-            <h3 className="aside-title ">Hỏi đáp về sản phẩm</h3>
+            <h3 className="aside-title ">Nhận xét về sản phẩm</h3>
             <div className="comments-grids">
                 {
                     comments.filter(item=> item.trangThai === 'CONG_BO').map((item) => (

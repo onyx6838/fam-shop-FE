@@ -181,7 +181,7 @@ const Details = () => {
                   </div>
                 </Col>
                 <Col lg={12} md={12} className="single-right-left simpleCart_shelfItem mt-5">
-                  <h3 className="mb-3">Đánh giá sản phẩm</h3>
+                  <h3 className="mb-3">Nhận xét sản phẩm</h3>
                 </Col>
                 <Col lg={12} md={12}>
                   <CommentForm maSPDanhGia={productDetail.maSP} />

@@ -91,7 +91,7 @@ const CommentForm = ({ maSPDanhGia, maDanhGiaCha, resetBox }) => {
                     </div>
                 </div>
                 <div className="submit text-left">
-                    <button className="btn btn-style btn-primary" type='submit'>Đánh giá</button>
+                    <button className="btn btn-style btn-primary" type='submit'>Gửi nhận xét</button>
                 </div>
             </form>
         </div>
