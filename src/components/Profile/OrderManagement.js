@@ -139,6 +139,10 @@ const OrderManagement = () => {
     {
       Header: "Tình trạng",
       accessor: "trangThai"
+    },
+    {
+      Header: "Tổng tiền",
+      accessor: "tongTien"
     }
   ];
 
@@ -180,6 +184,7 @@ const OrderManagement = () => {
         diaChi: info.diaChi,
         thoiGianDat: info.thoiGianDat,
         trangThai: statusOrderFormatter.filter((item) => item.name === info.trangThai).map((obj) => obj.value),
+        tongTien: info.tongTien
       }));
 
     getData(currentPage).then((info) => {

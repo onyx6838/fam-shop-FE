@@ -66,13 +66,13 @@ const CategoryProduct = () => {
     <div className='ads-grid py-sm-5 py-4'>
       <Container className="py-xl-4 py-lg-2">
         {
-          product ? (
+          product.length > 0 ? (
             <>
               <h3 className="tittle-w3l text-center">
                 <span className="font-weight-normal">
                   {
-                    typeOfGetProduct === 'CATEGORY' || typeOfGetProduct === 'BRAND_CATEGORY' ? 
-                    categoryName : (search.length > 0 && `Kết quả tìm kiếm cho : ${search}`)
+                    typeOfGetProduct === 'CATEGORY' || typeOfGetProduct === 'BRAND_CATEGORY' ?
+                      categoryName : (search.length > 0 && `Kết quả tìm kiếm cho : ${search}`)
                   }
                 </span>
               </h3>
@@ -109,7 +109,7 @@ const CategoryProduct = () => {
           ) : (
             <h3 className="tittle-w3l text-center">
               <span className="font-weight-normal">
-                Không có sản phẩm
+                Không có sản phẩm cho từ khóa : {search}
               </span>
             </h3>
           )
