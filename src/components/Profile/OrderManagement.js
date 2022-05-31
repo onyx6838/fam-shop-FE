@@ -6,6 +6,7 @@ import { useTable } from 'react-table'
 
 import '../../assets/css/bootstrap.css'
 import '../../assets/css/style.css'
+import '../../assets/css/fontawesome-all.css'
 
 import DonDatHangApi from '../../api/DonDatHangApi'
 
@@ -124,6 +125,16 @@ const Pagination = ({ pageChangeHandler, totalPages }) => {
   );
 };
 
+const CustomCell = ({ listCTDD }) => {
+  return (
+    <Link to={`/user/order-management/details`} state={{
+      listCTDD
+    }}>
+      <i className="fa fa-info-circle"></i>
+    </Link>
+  )
+}
+
 const OrderManagement = () => {
   const userInfo = useSelector(state => state.user.userInfo)
 
@@ -143,6 +154,11 @@ const OrderManagement = () => {
     {
       Header: "Tổng tiền",
       accessor: "tongTien"
+    },
+    {
+      Header: "Thao tác",
+      accessor: "listCTDD",
+      Cell: ({ cell: { value } }) => <CustomCell listCTDD={value} />
     }
   ];
 
@@ -184,7 +200,9 @@ const OrderManagement = () => {
         diaChi: info.diaChi,
         thoiGianDat: info.thoiGianDat,
         trangThai: statusOrderFormatter.filter((item) => item.name === info.trangThai).map((obj) => obj.value),
-        tongTien: info.tongTien
+        tongTien: info.tongTien,
+        maDonDat: info.maDonDat,
+        listCTDD: info.listCTDD
       }));
 
     getData(currentPage).then((info) => {

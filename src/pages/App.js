@@ -1,5 +1,7 @@
 import Home from "./Home";
 import { Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../redux/store/cart";
 import TopHeader from "../components/TopHeader/TopHeader";
 import HeaderBottom from "../components/HeaderBottom/HeaderBottom";
 import Navigation from "../components/Navigation/Navigation";
@@ -14,11 +16,10 @@ import Login from "./Login";
 import withAuth from "../HOC/withAuth";
 import Register from "./Register";
 import PaymentSuccess from "./PaymentSuccess";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCart } from "../redux/store/cart";
 import User from "./User";
 import Profile from "../components/Profile/Profile";
 import OrderManagement from "../components/Profile/OrderManagement";
+import OrderDetail from "../components/Profile/OrderDetail";
 
 function App() {
   const dispatch = useDispatch()
@@ -54,6 +55,7 @@ function App() {
         <Route path='/user' element={<ProtectedRoutes.User />}>
           <Route path="profile" element={<Profile />} />
           <Route path="order-management" element={<OrderManagement />} />
+          <Route path="order-management/details" element={<OrderDetail />} />
         </Route>
       </Routes>
       <Footer />
