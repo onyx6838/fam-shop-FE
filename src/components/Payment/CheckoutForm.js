@@ -10,9 +10,17 @@ import Swal from "sweetalert2";
 import tree from '../../assets/images/trees.png'
 import nyanCat from '../../assets/images/gif/nyan-cat.gif'
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const CheckoutForm = ({ cartList }) => {
     const navigate = useNavigate();
+
+    const CheckoutSchema = Yup.object().shape({
+        phone: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required')
+    })
 
     return (
         <Formik
@@ -25,6 +33,7 @@ const CheckoutForm = ({ cartList }) => {
                 dateDelivery: '',
                 paymentType: ''
             }}
+            validationSchema={CheckoutSchema}
             onSubmit={async (values, actions) => {
                 const response = DonDatHangApi.payment({ ...values, cartList })
                 response.then((rs) => {
