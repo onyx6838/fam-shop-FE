@@ -18,6 +18,8 @@ import UserApi from '../api/UserApi'
 import storage from '../storage/storage';
 import { saveLocalCart } from '../redux/store/cart';
 
+import Swal from "sweetalert2";
+
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -73,6 +75,13 @@ const Login = () => {
                                     catch (error) {
                                         if (error.status === 401) {
                                             console.log(error);
+                                            Swal.fire({
+                                                position: 'top-end',
+                                                icon: 'error',
+                                                title: 'Sai tài khoản hoặc mật khẩu !!!',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                            })
                                         } else {
                                             console.log(error);
                                         }
