@@ -9,7 +9,6 @@ import img from '../assets/images/blog-single.jpg'
 import { useNavigate } from 'react-router-dom';
 
 import { ErrorMessage, Formik } from 'formik';
-import * as Yup from 'yup';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setRefreshToken, setRememberMe, setToken, setUserInfo } from '../redux/store/user';
@@ -20,6 +19,8 @@ import { saveLocalCart } from '../redux/store/cart';
 
 import Swal from "sweetalert2";
 
+import validator from '../utils/YupValidator';
+
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,17 +28,6 @@ const Login = () => {
     const cart = useSelector(state => state.cart.cart)
 
     const [isRememberMe, setRemember] = useState(useSelector(state => state.user.isRememberMe));
-
-    const LoginSchema = Yup.object().shape({
-        username: Yup.string()
-            .min(2, 'Too Short!')
-            .max(50, 'Too Long!')
-            .required('Required'),
-        password: Yup.string()
-            .min(2, 'Too Short!')
-            .max(50, 'Too Long!')
-            .required('Required')
-    })
 
     return (
         <div className="container py-md-5 py-4">
@@ -50,7 +40,7 @@ const Login = () => {
                         <Card.Body>
                             <Formik
                                 initialValues={{ username: '', password: '' }}
-                                validationSchema={LoginSchema}
+                                validationSchema={validator.LoginSchema}
                                 onSubmit={async (values) => {
                                     try {
                                         const user = await UserApi.login(values.username, values.password);

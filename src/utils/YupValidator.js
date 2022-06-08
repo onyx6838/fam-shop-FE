@@ -1,26 +1,38 @@
 import * as Yup from 'yup';
 
-// RegEx for phone number validation
-const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
+// RegEx for validation
+const emailRegExp = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
 
 // Schema for yup
-const validationSchema = Yup.object().shape({
-    name: Yup.string()
-        .min(2, "*Names must have at least 2 characters")
-        .max(100, "*Names can't be longer than 100 characters")
-        .required("*Name is required"),
+const ProfileSchema = Yup.object().shape({
+    hoTen: Yup.string()
+        .min(5, 'Quá ngắn!')
+        .max(50, 'Quá dài!')
+        .required('Bắt buộc'),
     email: Yup.string()
-        .email("*Must be a valid email address")
-        .max(100, "*Email must be less than 100 characters")
-        .required("*Email is required"),
-    phone: Yup.string()
-        .matches(phoneRegExp, "*Phone number is not valid")
-        .required("*Phone number required"),
-    blog: Yup.string()
-        .url("*Must enter URL in http://www.example.com format")
-        .required("*URL required")
+        .min(5, 'Quá ngắn!')
+        .max(50, 'Quá dài!')
+        .matches(emailRegExp, "Định dạng email không đúng")
+        .required('Bắt buộc'),
+    diaChi: Yup.string()
+        .min(2, 'Quá ngắn!')
+        .max(80, 'Quá dài!')
 });
 
-const validator = { validationSchema }
+const LoginSchema = Yup.object().shape({
+    username: Yup.string()
+        .min(2, 'Quá ngắn!')
+        .max(50, 'Quá dài!')
+        .required('Bắt buộc'),
+    password: Yup.string()
+        .min(2, 'Quá ngắn!')
+        .max(50, 'Quá dài!')
+        .required('Bắt buộc')
+})
+
+const validator = {
+    ProfileSchema,
+    LoginSchema
+}
 
 export default validator
