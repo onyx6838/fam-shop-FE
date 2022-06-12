@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import SliderImage from "react-zoom-slider";
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Table } from 'react-bootstrap';
 
 import '../assets/css/bootstrap.css';
 import '../assets/css/style.css';
@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import SanPhamApi from '../api/SanPhamApi'
+import DacTrungApi from '../api/DacTrungApi'
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart, addToCart, fetchCart } from '../redux/store/cart';
 
@@ -52,9 +53,11 @@ const Details = () => {
 
   const [quantityAddToCart, setQuantityAddToCart] = useState(1);
 
-  const [dataImage, setDataImage] = useState([])
+  const [dataImage, setDataImage] = useState([]);
 
-  const [relateProduct, setRelateProduct] = useState([])
+  const [relateProduct, setRelateProduct] = useState([]);
+
+  const [dtsp, setDTSP] = useState([]);
 
   useEffect(() => {
     const response = SanPhamApi.getById(`${id}`);
@@ -68,8 +71,13 @@ const Details = () => {
       ))
       setDataImage(slideImg)
 
-      const data = SanPhamApi.getRelateProduct(res.loaiSanPham.maLoai)
+      const data = SanPhamApi.getRelateProduct(res.loaiSanPham.maLoai, id)
       data.then(res => setRelateProduct(res))
+    })
+
+    const responseDTSP = DacTrungApi.getDTSPBySanPham(id);
+    responseDTSP.then((rs) => {
+      setDTSP(rs)
     })
   }, [id]);
 
@@ -106,7 +114,7 @@ const Details = () => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: relateProduct.length === 1 ? 1 : 2,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -169,7 +177,7 @@ const Details = () => {
                     </div>
                   </div>
                 </Col>
-                <Col lg={12} md={12}>
+                <Col lg={8} md={8}>
                   <div className="product-single-w3l">
                     <p className="my-3">
                       <i className="far fa-hand-point-right mr-2"></i>
@@ -178,6 +186,62 @@ const Details = () => {
                     {
                       productDetail.moTa && parse(productDetail.moTa)
                     }
+                  </div>
+                </Col>
+                <Col lg={4} md={4}>
+                  <div className="product-single-w3l">
+                    <p className="my-3">
+                      <i className="far fa-hand-point-right mr-2"></i>
+                      Đặc tính sản phẩm
+                    </p>
+                    <Table>
+                      <tbody>
+                        <tr>
+                          <td><b>Thương Hiệu:</b></td>
+                          <td>{th && th.tenThuongHieu}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Xuất xứ:</b></td>
+                          <td>
+                            {
+                              dtsp.some(item => item.dacTrung.loaiDacTrung === 'Nước sản xuất') ?
+                                (
+                                  <>
+                                    {
+                                      dtsp.filter(item => item.dacTrung.loaiDacTrung === 'Nước sản xuất').map(item => item.dacTrung.ten)
+                                    }
+                                  </>
+                                )
+                                : 'Đang cập nhật'
+                            }
+                          </td>
+                        </tr>
+                        {
+                          dtsp.some(item => item.dacTrung.loaiDacTrung === 'Nhu cầu dinh dưỡng') && (
+                            <tr>
+                              <td><b>Nhu cầu dinh dưỡng:</b></td>
+                              <td>
+                                {
+                                  dtsp.filter(item => item.dacTrung.loaiDacTrung === 'Nhu cầu dinh dưỡng').map(e => e.dacTrung.ten).join(', ')
+                                }
+                              </td>
+                            </tr>
+                          )
+                        }
+                        {
+                          dtsp.some(item => item.dacTrung.loaiDacTrung === 'Đặc điểm nổi bật') && (
+                            <tr>
+                              <td><b>Đặc điểm nổi bật:</b></td>
+                              <td>
+                                {
+                                  dtsp.filter(item => item.dacTrung.loaiDacTrung === 'Đặc điểm nổi bật').map(e => e.dacTrung.ten).join(', ')
+                                }
+                              </td>
+                            </tr>
+                          )
+                        }
+                      </tbody>
+                    </Table>
                   </div>
                 </Col>
                 <Col lg={12} md={12} className="single-right-left simpleCart_shelfItem mt-5">
@@ -189,47 +253,53 @@ const Details = () => {
                 <Col lg={12} md={12} className="single-right-left simpleCart_shelfItem mt-5 w3l-text-11">
                   <CommentBox maSPDanhGia={productDetail.maSP} />
                 </Col>
-                <Col lg={12} md={12} className="single-right-left simpleCart_shelfItem mt-5">
-                  <h3 className="mb-3">Sản phẩm liên quan</h3>
-                </Col>
-                <Col lg={12} md={12}>
-                  <div className="px-lg-4 my-5">
-                    <Slider {...settings}>
-                      {
-                        relateProduct.map(item => (
-                          <div className={`product-men mt-md-0 mt-5`} key={item.maSP}>
-                            <div className="men-pro-item simpleCart_shelfItem">
-                              <div className="men-thumb-item text-center">
-                                <img src={`${item.hinhAnh}`} alt="" className="mx-auto d-block" style={{ height: '207.99px' }} />
-                                <div className="men-cart-pro">
-                                  <div className="inner-men-cart-pro">
-                                    <Link to={{
-                                      pathname: `/details/${item.maSP}`
-                                    }} className="link-product-add-cart">Xem chi tiết</Link>
+                {
+                  relateProduct.length > 0 && (
+                    <>
+                      <Col lg={12} md={12} className="single-right-left simpleCart_shelfItem mt-5">
+                        <h3 className="mb-3">Sản phẩm liên quan</h3>
+                      </Col>
+                      <Col lg={12} md={12}>
+                        <div className="px-lg-4 my-5">
+                          <Slider {...settings}>
+                            {
+                              relateProduct.map(item => (
+                                <div className={`product-men mt-md-0 mt-5`} key={item.maSP}>
+                                  <div className="men-pro-item simpleCart_shelfItem">
+                                    <div className="men-thumb-item text-center">
+                                      <img src={`${item.hinhAnh}`} alt="" className="mx-auto d-block" style={{ height: '207.99px' }} />
+                                      <div className="men-cart-pro">
+                                        <div className="inner-men-cart-pro">
+                                          <Link to={{
+                                            pathname: `/details/${item.maSP}`
+                                          }} className="link-product-add-cart">Xem chi tiết</Link>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="item-info-product text-center mt-2">
+                                      <div style={{ "height": "100px" }}>
+                                        <h4 className="pt-1">
+                                          <Link to={{ pathname: `/details/${item.maSP}` }}>{item.ten}</Link>
+                                        </h4>
+                                      </div>
+                                      <div className="info-product-price">
+                                        <span className="item_price">{item.donGiaBan}đ</span>
+                                      </div>
+                                      <div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                        <button className="btn btn-style btn-style-secondary mt-3"
+                                          onClick={() => addToCartWithCheckRelate(item)}>Thêm vào giỏ</button>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="item-info-product text-center mt-2">
-                                <div style={{ "height": "100px" }}>
-                                  <h4 className="pt-1">
-                                    <Link to={{ pathname: `/details/${item.maSP}` }}>{item.ten}</Link>
-                                  </h4>
-                                </div>
-                                <div className="info-product-price">
-                                  <span className="item_price">{item.donGiaBan}đ</span>
-                                </div>
-                                <div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                  <button className="btn btn-style btn-style-secondary mt-3"
-                                    onClick={() => addToCartWithCheckRelate(item)}>Thêm vào giỏ</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                      }
-                    </Slider>
-                  </div>
-                </Col>
+                              ))
+                            }
+                          </Slider>
+                        </div>
+                      </Col>
+                    </>
+                  )
+                }
               </Row>
             </Container>
           </div>

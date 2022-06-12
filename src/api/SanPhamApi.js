@@ -56,8 +56,8 @@ const getByParentLoaiSP = (loaiSP, pageable) => {
     return Api.post(`${url}/category?page=${page}&size=${size}`, loaiSP);
 }
 
-const getRelateProduct = (cateId) => {
-    return Api.get(`${url}/category/relate/${cateId}`);
+const getRelateProduct = (cateId, maSP) => {
+    return Api.get(`${url}/category/relate/${cateId}/${maSP}`);
 }
 
 const api = { getAll, getNewOrderByThoiGianNhap, getAllPaging, getById, getSanPhamByDacTrungs, filterByDacTrungAndLoaiSP, getByParentLoaiSP, getRelateProduct }

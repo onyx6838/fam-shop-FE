@@ -17,5 +17,9 @@ const getFeatureByLoaiSP = (filter) => {
     return Api.post(`${url}/category`, productFilter);
 }
 
-const api = { getAll, getFeatureByLoaiSP }
+const getDTSPBySanPham = (id) => {
+    return Api.get(`${url}/dtsp/${id}`);
+};
+
+const api = { getAll, getFeatureByLoaiSP, getDTSPBySanPham }
 export default api;

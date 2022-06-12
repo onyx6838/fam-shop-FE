@@ -1,11 +1,13 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import CartItem from '../components/Cart/CartItem';
 import { selectCart } from '../redux/selectors/cartSelector';
 
 const Cart = () => {
+    const navigate = useNavigate();
     const cartList = useSelector(selectCart);
 
     const cartRows = cartList.map((item, i) => (
@@ -73,9 +75,22 @@ const Cart = () => {
                         <div className="checkout-left">
                             <div className="address_form_agile mt-sm-5 mt-4">
                                 <div className="checkout-right-basket">
-                                    <Link to="/payment">Xác nhận đơn hàng
+                                    <a href='cart' onClick={(e) => {
+                                        e.preventDefault()
+                                        if (cartList.length === 0) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Chưa chọn sản phẩm nào !!!',
+                                                text: 'Đã xảy ra lỗi'
+                                            }).then((rs) => {
+                                                navigate("/cart")
+                                            })
+                                        } else {
+                                            navigate("/payment")
+                                        }
+                                    }}>Xác nhận đơn hàng
                                         <span className="far fa-hand-point-right"></span>
-                                    </Link>
+                                    </a>
                                 </div>
                                 <div className="checkout-right-basket">
                                     <Link to="/home">Tiếp tục mua hàng
@@ -87,7 +102,6 @@ const Cart = () => {
                     </Col>
                 </Row>
             </Container>
-
         </div>
     )
 }
