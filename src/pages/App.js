@@ -20,6 +20,10 @@ import User from "./User";
 import Profile from "../components/Profile/Profile";
 import OrderManagement from "../components/Profile/OrderManagement";
 import OrderDetail from "../components/Profile/OrderDetail";
+import Posts from "./Post";
+import PostList from "../components/Post/PostList";
+import PostListByCate from "../components/Post/PostListByCate";
+import PostDetail from "../components/Post/PostDetail";
 
 function App() {
   const dispatch = useDispatch()
@@ -42,16 +46,21 @@ function App() {
       <HeaderBottom />
       <Navigation />
       <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/home' element={<Home />}></Route>
-        <Route path='/details/:id' element={<Details />}></Route>
-        <Route path='/product' element={<Product />}></Route>
+        <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/details/:id' element={<Details />} />
+        <Route path='/product' element={<Product />} />
         <Route path='/cart' element={<Cart />}></Route>
-        <Route path='/payment' element={<ProtectedRoutes.Payment />}></Route>
-        <Route path='/category' element={<CategoryProduct />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/payment-success' element={<PaymentSuccess />}></Route>
+        <Route path='/payment' element={<ProtectedRoutes.Payment />} />
+        <Route path='/category' element={<CategoryProduct />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/payment-success' element={<PaymentSuccess />} />
+        <Route path='/posts' element={<Posts />}>
+          <Route path="list" element={<PostList />} />
+          <Route path=":cate" element={<PostListByCate />} />
+          <Route path="detail/:id" element={<PostDetail />} />
+        </Route>
         <Route path='/user' element={<ProtectedRoutes.User />}>
           <Route path="profile" element={<Profile />} />
           <Route path="order-management" element={<OrderManagement />} />

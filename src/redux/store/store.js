@@ -4,6 +4,7 @@ import cart from './cart'
 import product from './product'
 import user from './user'
 import comment from './comment'
+import post from './post'
 import { combineReducers } from 'redux'
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 //import storageSession from 'redux-persist/lib/storage/session'
@@ -21,7 +22,8 @@ const reducer = combineReducers({
     cart,
     product,
     user,
-    comment
+    comment,
+    post
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

@@ -73,9 +73,9 @@ const Navigation = () => {
 							<NavItem className="mr-lg-2 mb-lg-0 mb-2">
 								<Link className="nav-link" to="/home">Trang Chủ</Link>
 							</NavItem>
-							{/* <NavItem className="mr-lg-2 mb-lg-0 mb-2">
-								<Link className="nav-link" to="/">Liên hệ</Link>
-							</NavItem> */}
+							<NavItem className="mr-lg-2 mb-lg-0 mb-2">
+								<Link className="nav-link" to="/posts/list">Bài Viết</Link>
+							</NavItem>
 						</ul>
 					</div>
 				</nav>

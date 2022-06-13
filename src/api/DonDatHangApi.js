@@ -4,14 +4,15 @@ import storage from '../storage/storage'
 const url = "/dondathang";
 
 const payment = (data) => {
-    const { name, phone, address, shipAddress, email, dateDelivery, paymentType, cartList } = data
+    const { name, phone, shipAddress, email, dateDelivery, paymentType, cartList } = data
+    
     let request = {
         order: {
             name: name,
             username: storage.getItem("tenTK"),
             phone: phone,
             email: email,
-            address: address,
+            //address: address,
             shipAddress: shipAddress,
             dateDelivery: dateDelivery,
             paymentType: paymentType,

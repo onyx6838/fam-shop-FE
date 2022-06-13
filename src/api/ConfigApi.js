@@ -2,9 +2,13 @@ import Api from './Api';
 
 const url = "/files";
 
-const getDistrictFromXML  = () => {
+const getDistrictFromXML = () => {
     return Api.get(`${url}/xml/districts`);
 };
 
-const api = { getDistrictFromXML }
+const getPrecinctByDistrictId = (districtId) => {
+    return Api.get(`${url}/xml/districts/${districtId}`);
+}
+
+const api = { getDistrictFromXML, getPrecinctByDistrictId }
 export default api;
