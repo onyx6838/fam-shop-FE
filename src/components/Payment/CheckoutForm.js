@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import storage from '../../storage/storage'
 
@@ -11,8 +11,19 @@ import tree from '../../assets/images/trees.png'
 import nyanCat from '../../assets/images/gif/nyan-cat.gif'
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import ConfigApi from '../../api/ConfigApi'
 
 const CheckoutForm = ({ cartList }) => {
+    const [districtOption, setDistrictOption] = useState([]);
+
+    useEffect(() => {
+        const fetchSelectData = async () => {
+            let response = await ConfigApi.getDistrictFromXML();
+            setDistrictOption(response)
+        }
+        fetchSelectData()
+    }, [])
+
     const navigate = useNavigate();
 
     const CheckoutSchema = Yup.object().shape({
@@ -31,7 +42,9 @@ const CheckoutForm = ({ cartList }) => {
                 shipAddress: '',
                 email: '',
                 dateDelivery: '',
-                paymentType: ''
+                paymentType: '',
+                dst: '',
+                ward: ''
             }}
             validationSchema={CheckoutSchema}
             onSubmit={async (values, actions) => {
@@ -115,6 +128,41 @@ const CheckoutForm = ({ cartList }) => {
                                     </select>
                                 </div>
                             </Col>
+                            {/* <Col lg={12} className="form-group">
+                                <div className="section_room_pay">
+                                    <select
+                                        name='dst'
+                                        value={props.values.dst}
+                                        onChange={(e) => {
+                                            props.handleChange(e)
+                                            console.log(e.target.value);
+                                        }}
+                                        onBlur={props.handleBlur}>
+                                        <option value="">---- Chọn Quận Huyện ----</option>
+                                        {
+                                            districtOption.map(item => (
+                                                <option value={`${item.id}`} key={item.id}>{item.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </Col>
+                            <Col lg={12} className="form-group">
+                                <div className="section_room_pay">
+                                    <select
+                                        name='ward'
+                                        value={props.values.ward}
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}>
+                                        <option value="">---- Chọn Phường Xã ----</option>
+                                        {
+                                            districtOption.map(item => (
+                                                <option value={`${item.id}`} key={item.id}>{item.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </Col> */}
                             <Col lg={3}>
                                 <button type="submit" onClick={props.handleSubmit} className="btn btn-style" disabled={props.isSubmitting}>Thanh Toán</button>
                             </Col>

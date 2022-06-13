@@ -114,7 +114,7 @@ const Details = () => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: relateProduct.length === 1 ? 1 : 2,
+    slidesToShow: relateProduct.length === 1 ? 1 : (relateProduct.length === 2 ? 2 : 3),
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,

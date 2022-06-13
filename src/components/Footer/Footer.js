@@ -67,7 +67,6 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div className="w3l-middlefooter-sec">
@@ -89,18 +88,17 @@ const Footer = () => {
                                 }
                             </ul>
                         </div>
-
                         <div className="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
                             <h3 className="mb-3">Truy Cập Nhanh</h3>
                             <ul>
                                 <li className="mb-3">
-                                    <a href="about.html">Về Chúng Tôi</a>
+                                    <Link to='/'>Về Chúng Tôi</Link>
                                 </li>
                                 <li className="mb-3">
-                                    <a href="contact.html">Liên Hệ</a>
+                                    <Link to='/'>Liên Hệ</Link>
                                 </li>
                                 <li className="mb-3">
-                                    <a href="help.html">Hướng Dẫn</a>
+                                    <Link to='/'>Hướng Dẫn</Link>
                                 </li>
                             </ul>
                         </div>
