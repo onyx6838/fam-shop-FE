@@ -12,5 +12,9 @@ const getAllByCate = (page, size, cate) => {
     return Api.get(`${url}/${cate}`, { params: parameters });
 };
 
-const api = { getAll, getAllByCate }
+const getById = (id) => {
+    return Api.get(`${url}/detail/${id}`);
+};
+
+const api = { getAll, getAllByCate, getById }
 export default api;
