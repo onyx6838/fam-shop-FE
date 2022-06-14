@@ -7,7 +7,7 @@ const PostDetail = () => {
     console.log(id);
 
     return (
-        <div>PostDetail</div>
+        <div>{id}</div>
     )
 }
 

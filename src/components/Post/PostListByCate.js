@@ -24,7 +24,7 @@ const PostListByCate = () => {
     return (
         <>
             {
-                posts.map((item) => (<PostItem key={item.maBaiViet} />))
+                posts.map((item) => (<PostItem key={item.maBaiViet} info={item} />))
             }
             <br />
             <Pagination
