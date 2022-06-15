@@ -1,41 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import blogsingle from '../../assets/images/blog-single.jpg'
 import BaiVietApi from '../../api/BaiVietApi'
+import parse from 'html-react-parser';
 
 const PostDetail = () => {
     let { id } = useParams();
     const [detail, setDetail] = useState({})
+    const [creator, setCreator] = useState('');
 
     useEffect(() => {
         const response = BaiVietApi.getById(id);
-        response.then(rs => setDetail(rs))
+        response.then(rs => {
+            setDetail(rs)
+            setCreator(rs.tacGia.hoTen)
+        })
     }, [id])
 
     return (
         <>
-            <img src={blogsingle} class="img-fluid" alt="" />
-            <h4 class="">{detail.tieuDe}</h4>
-            <h6>Feb 12, 2021</h6>
-            <a href="#admin" class="admin">- by Maureen Bio</a>
-            <p class="mt-4 mb-3">Fusce faucibus ante vitae justo efficitur elementum. Donec et ipsum
-                faucibus
-                arcu
-                ipsum elementum, luctus justo. ac purus semper. Fusce faucibus ante vitae justo efficitur
-                sed et
-                elementum. Donec ipsum
-                faucibus arcu elementum, luctus justo. ac purus semper. Fusce faucibus ante vitae justo
-                efficitur
-                elementum. Donec ipsum faucibus arcu...</p>
-            <p class="mb-4">Lorem faucibus fusce ante vitae justo efficitur elementum. Donec ipsum faucibus
-                arcu elementum, luctus justo. ac purus semper. Fusce faucibus ante vitae justo efficitur
-                elementum. Donec ipsum faucibus. Donec ipsum faucibus arcu elementum..</p>
-            <p class="mb-3">Lorem faucibus fusce ante vitae justo efficitur elementum. Donec ipsum faucibus
-                arcu elementum, luctus justo. ac purus semper. Fusce faucibus ante vitae justo efficitur
-                elementum. Donec ipsum faucibus. Donec ipsum faucibus arcu elementum..</p>
-            <p class="mb-3">Lorem faucibus fusce ante vitae justo efficitur elementum. Donec ipsum faucibus
-                arcu elementum, luctus justo. ac purus semper. Fusce faucibus ante vitae justo efficitur
-                elementum. Donec ipsum faucibus. Donec ipsum faucibus arcu elementum..</p>
+            <img src={detail.anhDaiDien} className="img-fluid" alt="" />
+            <h4 className="">{detail.tieuDe}</h4>
+            <h6>{detail.thoiGianTao}</h6>
+            <a href="#admin" className="admin" onClick={(e) => e.preventDefault()}>- by {creator}</a>
+            <br />
+            {
+                detail.noiDung && parse(detail.noiDung)
+            }
         </>
     )
 }
