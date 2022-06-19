@@ -5,8 +5,10 @@ import UserApi from '../../api/UserApi'
 
 import Swal from "sweetalert2";
 import validator from '../../utils/YupValidator'
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+  const userInfo = useSelector(state => state.user.userInfo)
 
   const onSubmitFormProfile = (values, { resetForm }) => {
     const response = UserApi.changeProfile(values)
@@ -24,8 +26,8 @@ const Profile = () => {
 
   const formik = useFormik({
     initialValues: {
-      hoTen: '',
-      email: '',
+      hoTen: userInfo.hoTen,
+      email: userInfo.email,
       diaChi: ''
     },
     validationSchema: validator.ProfileSchema,

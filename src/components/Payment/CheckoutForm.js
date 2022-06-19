@@ -55,9 +55,9 @@ const CheckoutForm = ({ cartList }) => {
                 dst: '',
                 ward: ''
             }}
+            enableReinitialize
             validationSchema={CheckoutSchema}
             onSubmit={async (values, actions) => {
-                console.log(values);
                 let mergeAdd = values.shipAddress + ", " + selectedDistrict + ", " + selectedPrecinct
                 values.shipAddress = mergeAdd
                 const response = DonDatHangApi.payment({ ...values, cartList })
@@ -99,61 +99,67 @@ const CheckoutForm = ({ cartList }) => {
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur} />
                             </Col>
-                            <Col lg={12} className="form-group">
-                                <div className="section_room_pay">
-                                    <select
-                                        name='dst'
-                                        value={props.values.dst}
-                                        onChange={(e) => {
-                                            props.handleChange(e)
-                                            let index = e.nativeEvent.target.selectedIndex;
-                                            setSelectedDistrict(e.nativeEvent.target[index].text)
-                                            getPrecinctFromDistrict(e.target.value);
-                                        }}
-                                        onBlur={props.handleBlur}>
-                                        <option value="">---- Chọn Quận Huyện ----</option>
-                                        {
-                                            districtOption.map(item => (
-                                                <option value={`${item.id}`} key={item.id}>{item.name}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </div>
-                            </Col>
-                            <Col lg={12} className="form-group mt-3">
-                                <div className="section_room_pay">
-                                    <select
-                                        name='ward'
-                                        value={props.values.ward}
-                                        onChange={(e) => {
-                                            props.handleChange(e)
-                                            let index = e.nativeEvent.target.selectedIndex;
-                                            setSelectedPrecinct(e.nativeEvent.target[index].text)
-                                        }}
-                                        onBlur={props.handleBlur}>
-                                        <option value="">---- Chọn Phường Xã ----</option>
-                                        {
-                                            precinctOption.map(item => (
-                                                <option value={`${item.id}`} key={item.id}>{item.name}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </div>
-                            </Col>
-                            <Col lg={7} className="form-group">
-                                <label style={{ color: '#fdb03d' }}>Địa chỉ nhận hàng</label>
-                                <input type="text" name="shipAddress" placeholder="Địa chỉ nhận hàng (số nhà, ngõ...)" className="contact-input"
-                                    value={props.values.shipAddress}
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur} />
-                            </Col>
-                            <Col lg={5} className="form-group">
-                                <label style={{ color: '#fdb03d' }}>Email</label>
-                                <input type="email" name="email" placeholder="Email" className="contact-input"
-                                    value={props.values.email}
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur} />
-                            </Col>
+                            {
+                                props.values.paymentType !== '1' && (
+                                    <>
+                                        <Col lg={12} className="form-group">
+                                            <div className="section_room_pay">
+                                                <select
+                                                    name='dst'
+                                                    value={props.values.dst}
+                                                    onChange={(e) => {
+                                                        props.handleChange(e)
+                                                        let index = e.nativeEvent.target.selectedIndex;
+                                                        setSelectedDistrict(e.nativeEvent.target[index].text)
+                                                        getPrecinctFromDistrict(e.target.value);
+                                                    }}
+                                                    onBlur={props.handleBlur}>
+                                                    <option value="">---- Chọn Quận Huyện ----</option>
+                                                    {
+                                                        districtOption.map(item => (
+                                                            <option value={`${item.id}`} key={item.id}>{item.name}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                            </div>
+                                        </Col>
+                                        <Col lg={12} className="form-group mt-3">
+                                            <div className="section_room_pay">
+                                                <select
+                                                    name='ward'
+                                                    value={props.values.ward}
+                                                    onChange={(e) => {
+                                                        props.handleChange(e)
+                                                        let index = e.nativeEvent.target.selectedIndex;
+                                                        setSelectedPrecinct(e.nativeEvent.target[index].text)
+                                                    }}
+                                                    onBlur={props.handleBlur}>
+                                                    <option value="">---- Chọn Phường Xã ----</option>
+                                                    {
+                                                        precinctOption.map(item => (
+                                                            <option value={`${item.id}`} key={item.id}>{item.name}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                            </div>
+                                        </Col>
+                                        <Col lg={7} className="form-group">
+                                            <label style={{ color: '#fdb03d' }}>Địa chỉ nhận hàng</label>
+                                            <input type="text" name="shipAddress" placeholder="Địa chỉ nhận hàng (số nhà, ngõ...)" className="contact-input"
+                                                value={props.values.shipAddress}
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur} />
+                                        </Col>
+                                        <Col lg={5} className="form-group">
+                                            <label style={{ color: '#fdb03d' }}>Email</label>
+                                            <input type="email" name="email" placeholder="Email" className="contact-input"
+                                                value={props.values.email}
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur} />
+                                        </Col>
+                                    </>
+                                )
+                            }
                             <Col lg={12} className="form-group">
                                 <label style={{ color: '#fdb03d' }}>Thời gian nhận hàng dự kiến</label>
                                 <Form.Control type="date" name='dateDelivery'
@@ -170,8 +176,8 @@ const CheckoutForm = ({ cartList }) => {
                                         onBlur={props.handleBlur}>
                                         <option value="">---- Hình thức thanh toán ----</option>
                                         <option value="0">Chuyển khoản qua ngân hàng</option>
-                                        <option value="1">Trả tiền khi nhận hàng</option>
-                                        <option value="2">Trực tiếp đến cửa hàng</option>
+                                        <option value="2">Trả tiền khi nhận hàng</option>
+                                        <option value="1">Trực tiếp đến cửa hàng</option>
                                     </select>
                                 </div>
                             </Col>

@@ -15,7 +15,7 @@ const OrderDetail = () => {
             </div>
             {
                 listCTDD.map(item => (
-                    <div className="post mb-5">
+                    <div className="post mb-5" key={item.maCTDDH}>
                         <figure className="post-thumb">
                             <img src={item.sanPham.hinhAnh} alt="" />
                         </figure>

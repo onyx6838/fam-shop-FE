@@ -83,7 +83,7 @@ const CategoryProduct = () => {
                   <div className="wrapper">
                     {
                       product && chunk(rows, 3).map((item, i) => (
-                        <div className="product-sec1 px-lg-4 mb-5" key={i}>
+                        <div className={`product-sec1 px-lg-4 mb-5`} key={i}>
                           <Row>
                             {item}
                           </Row>
