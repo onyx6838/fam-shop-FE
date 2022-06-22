@@ -7,7 +7,10 @@ const url1 = "/taikhoan";
 
 const login = (username, password) => {
     var body = new FormData();
-    body.append('username', username);
+    if(/^\d+$/.test(username)) {
+        body.append('phone', username);
+    }
+    else body.append('username', username);
     body.append('password', password);
 
     return Api.post(`${url}`, body)

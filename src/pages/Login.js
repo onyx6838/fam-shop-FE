@@ -85,7 +85,7 @@ const Login = () => {
                                         <Row className="contact-block">
                                             <Col lg={12} className="form-group">
                                                 <input type="text" name="username"
-                                                    placeholder="Tên đăng nhập" className="contact-input"
+                                                    placeholder="Tên đăng nhập hoặc SĐT" className="contact-input"
                                                     onChange={props.handleChange}
                                                     onBlur={props.handleBlur}
                                                     value={props.values.username} />
