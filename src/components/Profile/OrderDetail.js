@@ -20,9 +20,9 @@ const OrderDetail = () => {
                             <img src={item.sanPham.hinhAnh} alt="" />
                         </figure>
                         <div className="text">
-                            <span>{item.sanPham.ten}</span>
+                            <span>{item.sanPham.ten} (sl: {item.soLuong} - {item.sanPham.donGiaBan}đ)</span>
                         </div>
-                        <div className="post-info">{item.sanPham.donGiaBan} đ</div>
+                        <div className="post-info">{item.tongTienMuc} đ</div>
                     </div>
                 ))
             }

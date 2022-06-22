@@ -25,6 +25,11 @@ const TopProductItem = ({ info, grid }) => {
                 }
             ));
             dispatch(fetchCart({ tenTK: userInfo.tenTK }));
+            Swal.fire({
+                icon: 'success',
+                title: 'Thêm sản phẩm',
+                text: 'Thêm sản phẩm vào giỏ'
+            })
         }
         else {
             const inCart = cartInfo.find((item) => item.maSP === info.maSP);
