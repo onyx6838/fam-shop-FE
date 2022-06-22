@@ -71,8 +71,8 @@ const CategoryProduct = () => {
               <h3 className="tittle-w3l text-center">
                 <span className="font-weight-normal">
                   {
-                    typeOfGetProduct === 'CATEGORY' || typeOfGetProduct === 'BRAND_CATEGORY' ?
-                      categoryName : (search.length > 0 && `Kết quả tìm kiếm cho : ${search}`)
+                    (typeOfGetProduct === 'CATEGORY' || typeOfGetProduct === 'BRAND_CATEGORY') ? `Kết quả cho ${categoryName}`
+                    : (search.length > 0 && `Kết quả tìm kiếm cho : ${search}`)
                   }
                 </span>
               </h3>
@@ -109,12 +109,12 @@ const CategoryProduct = () => {
           ) : (
             <h3 className="tittle-w3l text-center">
               <span className="font-weight-normal">
-                Không có sản phẩm cho từ khóa : {search}
+                Không có sản phẩm
               </span>
             </h3>
           )
         }
-      </Container >
+      </Container>
     </div >
   )
 }
